@@ -1,0 +1,160 @@
+/* Reset básico y fuentes */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Encabezado */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background-color: #ffcb05;
+  border-bottom: 2px solid #3b4cca;
+}
+
+.header .logo {
+  width: 40px;
+  height: auto;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  color: #2a2a2a;
+}
+
+/* Navegación inferior */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #3b4cca;
+  display: flex;
+  justify-content: space-around;
+  padding: 0.7rem 0;
+  z-index: 10;
+}
+
+.bottom-nav button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.bottom-nav button:hover {
+  text-decoration: underline;
+}
+
+/* Vista principal */
+#main-view {
+  flex: 1;
+  padding: 1rem;
+  margin-bottom: 70px; /* espacio para nav inferior */
+}
+
+/* Carta Pokémon */
+.carta {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+.bloqueada {
+  filter: grayscale(100%) brightness(0.3) blur(1px);
+  opacity: 0.5;
+}
+
+/* Grid de cartas */
+.grid-cartas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 1rem;
+  justify-items: center;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 15px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.close-modal {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Toast flotante */
+.toast {
+  position: fixed;
+  bottom: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  opacity: 0.9;
+  font-size: 0.85rem;
+  z-index: 20;
+}
+
+.toast.hidden {
+  display: none;
+}
+
+/* Responsive mejoras */
+@media (min-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .bottom-nav button {
+    font-size: 1rem;
+  }
+}
