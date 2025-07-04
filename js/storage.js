@@ -1,39 +1,27 @@
-const STORAGE_KEY = 'cartasDesbloqueadas';
+// js/storage.js
+const CLAVE_COLECCION = 'coleccion';
 
-/**
- * Devuelve un array con los IDs de cartas desbloqueadas.
- * @returns {number[]}
- */
-export function obtenerCartasDesbloqueadas() {
-  const datos = localStorage.getItem(STORAGE_KEY);
+export function obtenerColeccion() {
+  const datos = localStorage.getItem(CLAVE_COLECCION);
   return datos ? JSON.parse(datos) : [];
 }
 
-/**
- * Verifica si un Pokémon está desbloqueado.
- * @param {number} id - El ID del Pokémon.
- * @returns {boolean}
- */
-export function estaDesbloqueado(id) {
-  const cartas = obtenerCartasDesbloqueadas();
-  return cartas.includes(id);
+export function guardarColeccion(nuevaColeccion) {
+  localStorage.setItem(CLAVE_COLECCION, JSON.stringify(nuevaColeccion));
 }
 
-/**
- * Agrega un nuevo ID a las cartas desbloqueadas y guarda en localStorage.
- * @param {number} id - ID del Pokémon a guardar.
- */
-export function guardarPokemon(id) {
-  const cartas = obtenerCartasDesbloqueadas();
-  if (!cartas.includes(id)) {
-    cartas.push(id);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cartas));
+export function desbloquearPokemon(id) {
+  const coleccion = obtenerColeccion();
+  if (!coleccion.includes(id)) {
+    coleccion.push(id);
+    guardarColeccion(coleccion);
   }
 }
 
-/**
- * Borra todas las cartas desbloqueadas (solo para pruebas o reinicio).
- */
+export function estaDesbloqueado(id) {
+  return obtenerColeccion().includes(id);
+}
+
 export function reiniciarColeccion() {
-  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(CLAVE_COLECCION);
 }

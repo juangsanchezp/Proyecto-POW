@@ -1,4 +1,4 @@
-/* Reset básico y fuentes */
+/* Reset básico */
 * {
   margin: 0;
   padding: 0;
@@ -6,33 +6,85 @@
 }
 
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f8f9fa;
-  color: #222;
+  font-family: 'Pokemon Solid', sans-serif;
+  color: white;
+  background-image: url('../assets/img/fondo_estadio.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 100px;
 }
 
-/* Encabezado */
-.header {
+/* Logo Pokémon */
+.logo {
+  width: 220px;
+  height: auto;
+  display: block;
+  margin: 1.2rem auto 0;
+}
+
+/* Título */
+.titulo {
+  font-size: 2.5rem;
+  color: #ffcb05;
+  text-shadow: 2px 2px #3b4cca;
+  text-align: center;
+  margin: 0.5rem 0 1rem;
+}
+
+/* Contenedor de cartas */
+.grid-cartas {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.2rem;
+  justify-items: center;
+  width: 90%;
+  max-width: 720px;
+  margin-bottom: 5rem;
+}
+
+/* Carta */
+.carta {
+  position: relative;
+  width: 100px;
+  height: 140px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 1rem;
-  background-color: #ffcb05;
-  border-bottom: 2px solid #3b4cca;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0.5rem;
+  background-image: linear-gradient(to bottom, #f5f5f5, #ddd);
 }
 
-.header .logo {
-  width: 40px;
-  height: auto;
+.carta:hover {
+  transform: scale(1.05);
 }
 
-.header h1 {
-  font-size: 1.5rem;
-  color: #2a2a2a;
+.carta img {
+  width: 80%;
+  object-fit: contain;
+}
+
+/* Carta bloqueada */
+.bloqueada {
+  background-color: rgba(0, 0, 0, 0.5);
+  filter: grayscale(100%) brightness(0.4);
+  position: relative;
+}
+
+.bloqueada img {
+  opacity: 0.2;
 }
 
 /* Navegación inferior */
@@ -41,55 +93,46 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #3b4cca;
+  background: linear-gradient(to top, #002244, #003366);
   display: flex;
   justify-content: space-around;
-  padding: 0.7rem 0;
-  z-index: 10;
+  padding: 1rem 0;
+  z-index: 20;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .bottom-nav button {
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 0.9rem;
+  background: linear-gradient(to bottom, #ffcb05, #f5a623);
+  border: 2px solid #3b4cca;
+  border-radius: 12px;
+  padding: 0.8rem 1.2rem;
+  color: #2a2a2a;
+  font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
 }
 
 .bottom-nav button:hover {
-  text-decoration: underline;
+  transform: scale(1.05);
 }
 
-/* Vista principal */
-#main-view {
-  flex: 1;
-  padding: 1rem;
-  margin-bottom: 70px; /* espacio para nav inferior */
-}
-
-/* Carta Pokémon */
-.carta {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  transition: all 0.3s ease;
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 10px 20px;
   border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  z-index: 50;
 }
 
-.bloqueada {
-  filter: grayscale(100%) brightness(0.3) blur(1px);
-  opacity: 0.5;
-}
-
-/* Grid de cartas */
-.grid-cartas {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  gap: 1rem;
-  justify-items: center;
+.toast.hidden {
+  display: none;
 }
 
 /* Modal */
@@ -99,10 +142,11 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  z-index: 100;
 }
 
 .modal.hidden {
@@ -110,51 +154,57 @@ body {
 }
 
 .modal-content {
-  background-color: #fff;
-  padding: 1rem;
+  background-color: white;
+  color: #333;
   border-radius: 15px;
-  max-width: 400px;
+  padding: 1.5rem;
   width: 90%;
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  max-width: 400px;
+  text-align: center;
   position: relative;
+}
+
+.modal-content img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.modal-content h2 {
+  margin-bottom: 0.5rem;
+  color: #3b4cca;
+}
+
+.modal-content ul {
+  list-style: none;
+  margin-top: 0.5rem;
+  padding-left: 0;
+  text-align: left;
 }
 
 .close-modal {
   position: absolute;
   top: 0.5rem;
   right: 1rem;
-  font-size: 1.2rem;
   background: none;
   border: none;
+  font-size: 1.5rem;
   cursor: pointer;
 }
 
-/* Toast flotante */
-.toast {
-  position: fixed;
-  bottom: 5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
-  padding: 0.8rem 1.2rem;
-  border-radius: 10px;
-  opacity: 0.9;
-  font-size: 0.85rem;
-  z-index: 20;
-}
+/* Responsive */
+@media (max-width: 767px) {
+  .grid-cartas {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-.toast.hidden {
-  display: none;
-}
-
-/* Responsive mejoras */
-@media (min-width: 768px) {
-  .header h1 {
+  .titulo {
     font-size: 2rem;
   }
 
   .bottom-nav button {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
   }
 }
+

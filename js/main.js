@@ -1,60 +1,64 @@
+// js/main.js
 import { obtenerPokemonPorId } from './api.js';
-import { estaDesbloqueado, guardarPokemon } from './storage.js';
 import { mostrarModalPokemon } from './modal.js';
+import {
+  obtenerColeccion,
+  guardarColeccion
+} from './storage.js';
 
-// Selección de botones
-const btnIndice = document.getElementById('btn-indice');
-const btnSobre = document.getElementById('btn-sobre');
-const btnIntercambio = document.getElementById('btn-intercambio');
-const mainView = document.getElementById('main-view');
+const grid = document.querySelector('.grid-cartas'); // Asegúrate que coincide con tu CSS
 
-// Listeners para la navegación
-btnIndice.addEventListener('click', mostrarIndice);
-btnSobre.addEventListener('click', mostrarSobre);
-btnIntercambio.addEventListener('click', mostrarIntercambio);
+document.addEventListener('DOMContentLoaded', () => {
+  let coleccion = obtenerColeccion();
 
-// Mostrar índice al cargar por defecto
-document.addEventListener('DOMContentLoaded', mostrarIndice);
+  // Si está vacío, agregar 3 iniciales
+  if (coleccion.length === 0) {
+    const iniciales = [6, 3, 9]; // Charizard, Venusaur, Blastoise
+    guardarColeccion(iniciales);
+    coleccion = iniciales;
+  }
 
-// ------------------------------
-// Función para mostrar el índice
-// ------------------------------
-async function mostrarIndice() {
-  mainView.innerHTML = '<h2>Índice de Cartas</h2><div class="grid-cartas" id="grid-cartas"></div>';
-  const grid = document.getElementById('grid-cartas');
+  cargarCartas(coleccion);
+});
 
+function cargarCartas(coleccion) {
   for (let id = 1; id <= 150; id++) {
-    const img = document.createElement('img');
-    img.classList.add('carta');
+    const carta = document.createElement('div');
+    carta.classList.add('carta');
 
-    if (estaDesbloqueado(id)) {
-      img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+    const img = document.createElement('img');
+
+    if (coleccion.includes(id)) {
+      obtenerPokemonPorId(id).then(pokemon => {
+        if (!pokemon) return;
+
+        img.src = pokemon.sprites.other['official-artwork'].front_default;
+        img.alt = pokemon.name;
+        carta.appendChild(img);
+
+        carta.addEventListener('click', () => mostrarModalPokemon(pokemon));
+      });
     } else {
-      img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-      img.classList.add('bloqueada');
+      carta.classList.add('bloqueada');
+      img.src = './assets/oculto.png';
+      img.alt = 'Bloqueado';
+      carta.appendChild(img);
     }
 
-    img.addEventListener('click', async () => {
-      if (estaDesbloqueado(id)) {
-        const pokemon = await obtenerPokemonPorId(id);
-        mostrarModalPokemon(pokemon);
-      }
-    });
-
-    grid.appendChild(img);
+    grid.appendChild(carta);
   }
 }
 
-// ------------------------------
-// Abrir sobre (por implementar)
-// ------------------------------
-function mostrarSobre() {
-  mainView.innerHTML = '<h2>Abrir un Sobre</h2><p>Función en desarrollo...</p>';
+// Botones inferiores
+window.navegar = function (seccion) {
+  mostrarToast(`Navegar a: ${seccion}`);
+};
+
+function mostrarToast(mensaje) {
+  const toast = document.getElementById('toast');
+  toast.textContent = mensaje;
+  toast.classList.remove('hidden');
+  setTimeout(() => toast.classList.add('hidden'), 2500);
 }
 
-// ------------------------------
-// Intercambiar cartas (por implementar)
-// ------------------------------
-function mostrarIntercambio() {
-  mainView.innerHTML = '<h2>Intercambiar Cartas</h2><p>Función en desarrollo...</p>';
-}
+

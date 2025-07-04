@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Aplicación web de colección Pokémon TCG para desbloquear, consultar e intercambiar cartas de los primeros 150 Pokémon.">
-<link rel="stylesheet" href="./css/styles.css">
-<link rel="icon" href="./assets/img/ui/logo.svg" type="image/svg+xml">
-<title>CardDex - Pokémon TCG</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tu colección Pokémon</title>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-<header class="header">
-    <img src="./assets/img/ui/logo.svg" alt="Logo CardDex" class="logo">
-    <h1>CardDex</h1>
-</header>
+  <div class="contenedor">
+    <!-- Logo Pokémon -->
+    <img src="assets/img/logo.png" alt="Pokémon Logo" class="logo"/>
 
-<main id="main-view">
-    <!-- Vista dinámica (índice, sobre, intercambio) -->
-</main>
+    <!-- Título principal -->
+    <h1 class="titulo">Tu colección</h1>
 
-<nav class="bottom-nav">
-    <button id="btn-indice" aria-label="Índice de cartas">Índice</button>
-    <button id="btn-sobre" aria-label="Abrir un sobre">Abrir Sobre</button>
-    <button id="btn-intercambio" aria-label="Intercambiar cartas">Intercambiar</button>
-</nav>
+    <!-- Grid de cartas -->
+    <div class="grid-cartas"></div>
 
-<!-- Modal para información de la carta -->
-<div id="modal-carta" class="modal hidden" role="dialog" aria-modal="true">
-    <div class="modal-content">
-        <button class="close-modal" aria-label="Cerrar">&times;</button>
-        <div id="detalle-carta"></div>
+    <!-- Botones de navegación -->
+    <div class="bottom-nav">
+      <button onclick="navegar('coleccion')">Tu colección</button>
+      <button onclick="navegar('abrir')">Abrir un sobre</button>
+      <button onclick="navegar('intercambiar')">Intercambiar cartas</button>
     </div>
-</div>
 
-<!-- Mensajes flotantes -->
-<div id="toast" class="toast hidden"></div>
+    <!-- Toast de notificaciones -->
+    <div id="toast" class="toast hidden">Mensaje</div>
+  </div>
 
-<!-- Scripts -->
-<script src="./js/api.js"></script>
-<script src="./js/storage.js"></script>
-<script src="./js/modal.js"></script>
-<script src="./js/websocket.js"></script>
-<script src="./js/main.js"></script>
+  <!-- Modal para detalles del Pokémon -->
+  <div id="modal-carta" class="modal hidden">
+    <div class="modal-content">
+      <button class="close-modal">X</button>
+      <div id="detalle-carta"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript principal -->
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>
