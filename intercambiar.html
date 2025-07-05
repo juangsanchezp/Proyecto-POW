@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intercambiar Cartas</title>
+  <link rel="stylesheet" href="css/intercambiar.css" />
+</head>
+<body>
+  <div class="contenedor">
+
+    <!-- Logo -->
+    <img src="assets/img/logo.png" alt="Pokémon Logo" class="logo" />
+
+    <!-- Título -->
+    <h1 class="titulo">INTERCAMBIAR CARTAS</h1>
+
+    <!-- Zona de intercambio -->
+    <div class="zona-intercambio">
+      <!-- Cartas del usuario -->
+      <div class="panel panel-usuario">
+        <h2>TUS CARTAS</h2>
+        <div id="cartasUsuario" class="cartas-grid"></div>
+      </div>
+
+      <!-- Flechas -->
+      <div class="intercambio-icono">
+        <span>⇄</span>
+      </div>
+
+      <!-- Carta del adversario -->
+      <div class="panel panel-adversario">
+        <h2>CARTAS DEL ADVERSARIO</h2>
+        <div id="cartaAdversario" class="carta-adversario">
+          <img src="assets/img/oculto.png" alt="Carta adversario bloqueada" />
+          <p>Esperando selección...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón de Intercambiar -->
+    <button id="btnIntercambiar" disabled>INTERCAMBIAR</button>
+
+    <!-- Toast de notificación -->
+    <div id="toast" class="toast hidden">Mensaje</div>
+
+    <!-- Navegación inferior -->
+    <div class="bottom-nav">
+      <button onclick="window.location.href='index.html'">Tu colección</button>
+      <button onclick="window.location.href='abrir.html'">Abrir un sobre</button>
+      <button onclick="window.location.href='intercambiar.html'">Intercambiar cartas</button>
+    </div>
+  </div>
+
+  <script type="module" src="js/intercambiar.js"></script>
+</body>
+</html>
