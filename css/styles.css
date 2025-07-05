@@ -1,4 +1,4 @@
-/* Reset básico */
+/* ========== RESET Y BASE ========== */
 * {
   margin: 0;
   padding: 0;
@@ -38,7 +38,16 @@ body {
   margin: 0.5rem 0 1rem;
 }
 
-/* Contenedor de cartas */
+/* Contenedor general */
+.contenedor {
+  width: 100%;
+  max-width: 1024px;
+  padding: 0 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* ========== COLECCIÓN ========== */
 .grid-cartas {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -46,17 +55,16 @@ body {
   justify-items: center;
   width: 90%;
   max-width: 720px;
-  margin-bottom: 5rem;
+  margin: 2rem auto 5rem;
 }
 
-/* Carta */
 .carta {
   position: relative;
   width: 100px;
   height: 140px;
-  background-color: #fff;
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,7 +84,6 @@ body {
   object-fit: contain;
 }
 
-/* Carta bloqueada */
 .bloqueada {
   background-color: rgba(0, 0, 0, 0.5);
   filter: grayscale(100%) brightness(0.4);
@@ -87,7 +94,7 @@ body {
   opacity: 0.2;
 }
 
-/* Navegación inferior */
+/* ========== NAVEGACIÓN ========== */
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -118,7 +125,7 @@ body {
   transform: scale(1.05);
 }
 
-/* Toast */
+/* ========== TOAST ========== */
 .toast {
   position: fixed;
   bottom: 70px;
@@ -135,14 +142,14 @@ body {
   display: none;
 }
 
-/* Modal */
+/* ========== MODAL ========== */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0,0,0,0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -192,7 +199,7 @@ body {
   cursor: pointer;
 }
 
-/* Responsive */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 767px) {
   .grid-cartas {
     grid-template-columns: repeat(3, 1fr);
@@ -206,5 +213,13 @@ body {
     font-size: 0.9rem;
     padding: 0.6rem 1rem;
   }
-}
 
+  .carta {
+    width: 80px;
+    height: 110px;
+  }
+
+  .carta img {
+    width: 70%;
+  }
+}

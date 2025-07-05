@@ -51,8 +51,13 @@ function cargarCartas(coleccion) {
 
 // Botones inferiores
 window.navegar = function (seccion) {
-  mostrarToast(`Navegar a: ${seccion}`);
+  if (seccion === 'abrir') {
+    window.location.href = 'abrir.html';
+  } else {
+    mostrarToast(`Navegar a: ${seccion}`);
+  }
 };
+
 
 function mostrarToast(mensaje) {
   const toast = document.getElementById('toast');

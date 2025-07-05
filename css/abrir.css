@@ -1,0 +1,218 @@
+/* ==================== abrir.css ==================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Pokemon Solid', sans-serif;
+  color: white;
+  background-image: url('../assets/img/fondo_estadio.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 100px;
+}
+
+.logo {
+  width: 220px;
+  height: auto;
+  display: block;
+  margin: 1.2rem auto 0;
+}
+
+.titulo {
+  font-size: 2.5rem;
+  color: #ffcb05;
+  text-shadow: 2px 2px #3b4cca;
+  text-align: center;
+  margin: 0.5rem 0 1rem;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 1024px;
+  padding: 0 1rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* === SOBRE === */
+.sobre-contenedor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.sobre-img {
+  width: 180px;
+  transition: transform 1s ease;
+  z-index: 2;
+}
+
+.sobre-img.bajando {
+  transform: translateY(60px);
+}
+
+/* === BOTÓN === */
+.boton-sobre {
+  margin-top: 1rem;
+  padding: 0.8rem 1.4rem;
+  background-color: #ffcb05;
+  border: 2px solid #3b4cca;
+  color: #2a2a2a;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.boton-sobre:hover {
+  transform: scale(1.05);
+}
+
+/* === DESTELLO === */
+.destello {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 255, 150, 0.9) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.destello.activo {
+  animation: destelloAnim 1.2s ease-out forwards;
+}
+
+@keyframes destelloAnim {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* === CARTAS ANIMADAS (ACORDEÓN) === */
+.cartas-animadas {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.cartas-animadas img {
+  width: 120px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  background: white;
+  transform-origin: bottom center;
+  opacity: 0;
+  animation: volar 0.8s ease forwards;
+}
+
+.cartas-animadas img:nth-child(1) { transform: rotate(-25deg); animation-delay: 0.2s; }
+.cartas-animadas img:nth-child(2) { transform: rotate(-12deg); animation-delay: 0.4s; }
+.cartas-animadas img:nth-child(3) { transform: rotate(0deg);   animation-delay: 0.6s; }
+.cartas-animadas img:nth-child(4) { transform: rotate(12deg);  animation-delay: 0.8s; }
+.cartas-animadas img:nth-child(5) { transform: rotate(25deg);  animation-delay: 1.0s; }
+
+@keyframes volar {
+  from {
+    transform: translateY(100px) scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px) scale(1) rotate(var(--rotacion, 0deg));
+    opacity: 1;
+  }
+}
+
+/* === GALERÍA DE CARTAS === */
+.cartas-reveladas {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  z-index: 1;
+}
+
+.cartas-reveladas img {
+  width: 100px;
+  height: auto;
+  border-radius: 12px;
+  background: white;
+  padding: 0.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  animation: aparecer 0.7s ease-in-out;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.oculto {
+  display: none;
+}
+
+/* === NAVEGACIÓN === */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, #002244, #003366);
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 0;
+  z-index: 20;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.bottom-nav button {
+  background: linear-gradient(to bottom, #ffcb05, #f5a623);
+  border: 2px solid #3b4cca;
+  border-radius: 12px;
+  padding: 0.8rem 1.2rem;
+  color: #2a2a2a;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.bottom-nav button:hover {
+  transform: scale(1.05);
+}

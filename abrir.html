@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abrir un sobre</title>
+  <link rel="stylesheet" href="css/abrir.css" />
+</head>
+<body>
+  <div class="contenedor">
+    <!-- Logo y título -->
+    <img src="assets/img/logo.png" alt="Pokémon Logo" class="logo" />
+    <h1 class="titulo">Abrir un sobre</h1>
+
+    <!-- Contenedor del sobre -->
+    <div id="sobre-contenedor" class="sobre-contenedor">
+      
+      <!-- Brillo amarillo estilo explosión -->
+      <div id="destello" class="destello hidden"></div>
+
+      <!-- Cartas volando en acordeón -->
+      <div id="cartas-animadas" class="cartas-animadas"></div>
+
+      <!-- Imagen del sobre (cerrado o abierto) -->
+      <img 
+        src="assets/img/SobrePokemon (2).png" 
+        alt="Sobre cerrado" 
+        id="sobre-imagen" 
+        class="sobre-img"
+      >
+
+      <!-- Botón de abrir -->
+      <button id="btnAbrirSobre" class="boton-sobre">ABRIR SOBRE</button>
+    </div>
+
+    <!-- Galería con las cartas reveladas -->
+    <div id="cartas-reveladas" class="cartas-reveladas oculto"></div>
+
+    <!-- Navegación inferior -->
+    <div class="bottom-nav">
+      <button onclick="window.location.href='index.html'">Tu colección</button>
+    </div>
+  </div>
+
+  <!-- Script funcional -->
+  <script type="module" src="js/abrir.js"></script>
+</body>
+</html>
+
+
+
+
+
