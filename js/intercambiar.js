@@ -2,7 +2,7 @@ import { obtenerColeccion, guardarColeccion } from './storage.js';
 import { obtenerPokemonPorId } from './api.js';
 import { conectarWebSocket, enviarCartaIntercambio } from './websocket.js';
 
-let usuario = null;
+let usuario = 'usuario1'; // ← Establecido por defecto
 let cartaSeleccionada = null;
 let cartaRecibida = null;
 
@@ -12,23 +12,14 @@ window.addEventListener('DOMContentLoaded', () => {
   const btnIntercambiar = document.getElementById('btnIntercambiar');
   const toast = document.getElementById('toast');
 
-  // Solicitar usuario (solo si no está en localStorage)
-  let guardado = localStorage.getItem('usuarioActivo');
-  if (!guardado) {
-    const input = prompt("¿Eres el Usuario 1 o 2? (Escribe 1 o 2)");
-    if (input === "1" || input === "2") {
-      guardado = `usuario${input}`;
-      localStorage.setItem('usuarioActivo', guardado);
-    } else {
-      alert("Debes escribir 1 o 2. Recarga la página para intentar de nuevo.");
-      return;
-    }
+  // Guardar usuario predeterminado si no estaba ya
+  if (!localStorage.getItem('usuarioActivo')) {
+    localStorage.setItem('usuarioActivo', usuario);
   }
 
-  iniciarComo(guardado);
+  iniciarComo(usuario);
 
   function iniciarComo(nombre) {
-    usuario = nombre;
     conectarWebSocket(nombre);
     cargarCartasUsuario();
   }
@@ -41,14 +32,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
       const carta = document.createElement('div');
       carta.className = 'carta-seleccionable';
-      carta.innerHTML = `<img src="${datos.sprites.front_default}" alt="${datos.name}">`;
+      carta.innerHTML = `<img src="${datos.sprites.other['official-artwork'].front_default}" alt="${datos.name}">`;
       carta.addEventListener('click', (e) => seleccionarCarta(id, datos, e));
       cartasUsuario.appendChild(carta);
     }
   }
 
   function seleccionarCarta(id, datos, evento) {
-    cartaSeleccionada = { id, nombre: datos.name, imagen: datos.sprites.front_default };
+    cartaSeleccionada = { id, nombre: datos.name, imagen: datos.sprites.other['official-artwork'].front_default };
     document.querySelectorAll('.carta-seleccionable').forEach(c => c.classList.remove('carta-seleccionada'));
     evento.currentTarget.classList.add('carta-seleccionada');
     enviarCartaIntercambio(usuario, cartaSeleccionada);
@@ -91,5 +82,6 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => toast.classList.add('hidden'), 3000);
   }
 });
+
 
 
