@@ -39,6 +39,9 @@ function cargarCartas(coleccion) {
         img.alt = pokemon.name;
         carta.setAttribute("data-nombre", pokemon.name); // ← importante para el filtro
         carta.setAttribute("data-tipo", pokemon.types.map(t => t.type.name).join(" "));
+        const tipoPrincipal = pokemon.types[0].type.name;
+        carta.classList.add(`tipo-${tipoPrincipal}`);
+
         carta.appendChild(img);
 
 
