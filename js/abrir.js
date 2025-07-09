@@ -3,25 +3,25 @@ import { obtenerColeccion, guardarColeccion } from './storage.js';
 
 const btnAbrir = document.getElementById('btnAbrirSobre');
 const sobreImg = document.getElementById('sobre-imagen');
-const cartasDiv = document.getElementById('cartas-reveladas');
 const cartasAnimadas = document.getElementById('cartas-animadas');
-const destello = document.getElementById('destello');
+const cartaIndividual = document.getElementById('carta-individual');
+const imgCarta = document.getElementById('img-carta');
+const destelloCSS = document.getElementById('destello-css'); // NUEVO
 
 btnAbrir.addEventListener('click', async () => {
-  // Animar sobre
+  // Bajada del sobre
   sobreImg.classList.add('bajando');
-  sobreImg.style.transform = 'scale(0.8) rotateY(180deg)';
 
-  // Activar destello
-  destello.classList.remove('activo');
-  void destello.offsetWidth;
-  destello.classList.add('activo');
+  // Activar destello visual
+  destelloCSS.classList.remove('destello-css'); // reinicia animación
+  void destelloCSS.offsetWidth; // fuerza reflujo
+  destelloCSS.classList.add('destello-css'); // reaplica clase
 
-  // Esperar animación
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  sobreImg.src = 'assets/img/SobreAbiertoPokemon (2).png'; // Usa el PNG correcto del sobre abierto
+  // Esperar antes de cambiar imagen
+  await new Promise(resolve => setTimeout(resolve, 700));
+  sobreImg.src = 'assets/img/SobreAbiertoPokemon (4).png';
 
-  // Obtener nuevas cartas
+  // Obtener colección
   let coleccion = obtenerColeccion();
   const nuevasCartas = [];
   while (nuevasCartas.length < 5) {
@@ -32,31 +32,60 @@ btnAbrir.addEventListener('click', async () => {
   }
   guardarColeccion([...new Set([...coleccion, ...nuevasCartas])]);
 
-  // Mostrar cartas animadas en acordeón
-  cartasAnimadas.innerHTML = '';
-  for (let i = 0; i < nuevasCartas.length; i++) {
-    const id = nuevasCartas[i];
+  let indice = 0;
+
+  const mostrarCarta = async () => {
+    const id = nuevasCartas[indice];
     const pokemon = await obtenerPokemonPorId(id);
-    const img = document.createElement('img');
-    img.src = pokemon.sprites.other['official-artwork'].front_default;
-    img.alt = pokemon.name;
-    cartasAnimadas.appendChild(img);
-  }
 
-  // Esperar animación de vuelo
-  await new Promise(resolve => setTimeout(resolve, 1600));
+    imgCarta.src = pokemon.sprites.other['official-artwork'].front_default;
+    imgCarta.alt = pokemon.name;
 
-  // Mostrar en galería
-  cartasDiv.innerHTML = '';
-  cartasDiv.classList.remove('oculto');
-  for (const id of nuevasCartas) {
-    const pokemon = await obtenerPokemonPorId(id);
-    const img = document.createElement('img');
-    img.src = pokemon.sprites.other['official-artwork'].front_default;
-    img.alt = pokemon.name;
-    cartasDiv.appendChild(img);
-  }
+    cartaIndividual.className = 'carta-individual oculto';
+    void cartaIndividual.offsetWidth;
+    cartaIndividual.classList.remove('oculto');
+    cartaIndividual.classList.add('tipo-' + pokemon.types[0].type.name);
+    cartaIndividual.classList.add('mostrar');
+  };
 
-  btnAbrir.disabled = true;
-  btnAbrir.textContent = "¡Sobre abierto!";
+  const avanzar = async () => {
+    indice++;
+    if (indice < nuevasCartas.length) {
+      await mostrarCarta();
+    } else {
+      cartaIndividual.classList.add('oculto');
+
+      // Mostrar cartas en arco
+      const angulos = [-25, -12, 0, 12, 25];
+      const desplazamientosY = [30, 15, 0, 15, 30];
+
+      cartasAnimadas.innerHTML = '';
+      for (let i = 0; i < nuevasCartas.length; i++) {
+        const id = nuevasCartas[i];
+        const pokemon = await obtenerPokemonPorId(id);
+        const carta = document.createElement('div');
+        carta.classList.add('carta', `tipo-${pokemon.types[0].type.name}`);
+        carta.style.setProperty('--rot', `${angulos[i]}deg`);
+        carta.style.setProperty('--desplazamientoY', `${desplazamientosY[i]}px`);
+
+        const img = document.createElement('img');
+        img.src = pokemon.sprites.other['official-artwork'].front_default;
+        img.alt = pokemon.name;
+        carta.appendChild(img);
+        cartasAnimadas.appendChild(carta);
+      }
+
+      setTimeout(() => {
+        cartasAnimadas.classList.add('animate');
+      }, 100);
+
+      btnAbrir.disabled = true;
+      btnAbrir.textContent = "¡Sobre abierto!";
+    }
+  };
+
+  cartaIndividual.addEventListener('click', avanzar);
+  cartaIndividual.addEventListener('touchstart', avanzar);
+
+  await mostrarCarta();
 });

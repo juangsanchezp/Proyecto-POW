@@ -2,12 +2,11 @@
 import { obtenerPokemonPorId } from './api.js';
 import { mostrarModalPokemon } from './modal.js';
 import {
-        obtenerColeccion,
-        guardarColeccion
-      } from './storage.js';
+  obtenerColeccion,
+  guardarColeccion
+} from './storage.js';
 
-const grid = document.querySelector('.grid-cartas'); // Asegúrate que coincide con tu CSS
-// Filtro por nombre desde la searchbar
+const grid = document.querySelector('.grid-cartas');
 const inputBusqueda = document.getElementById("search-input");
 const botonesTipo = document.querySelectorAll(".tipo-btn");
 
@@ -37,21 +36,26 @@ function cargarCartas(coleccion) {
 
         img.src = pokemon.sprites.other['official-artwork'].front_default;
         img.alt = pokemon.name;
-        carta.setAttribute("data-nombre", pokemon.name); // ← importante para el filtro
+        carta.setAttribute("data-nombre", pokemon.name);
         carta.setAttribute("data-tipo", pokemon.types.map(t => t.type.name).join(" "));
         const tipoPrincipal = pokemon.types[0].type.name;
         carta.classList.add(`tipo-${tipoPrincipal}`);
 
         carta.appendChild(img);
-
-
         carta.addEventListener('click', () => mostrarModalPokemon(pokemon));
       });
     } else {
       carta.classList.add('bloqueada');
-      img.src = './assets/oculto.png';
-      img.alt = 'Bloqueado';
-      carta.appendChild(img);
+
+      obtenerPokemonPorId(id).then(pokemon => {
+        if (!pokemon) return;
+
+        img.src = pokemon.sprites.other['official-artwork'].front_default;
+        img.alt = pokemon.name;
+        img.classList.add('silueta');
+
+        carta.appendChild(img);
+      });
     }
 
     grid.appendChild(carta);
@@ -67,7 +71,6 @@ window.navegar = function (seccion) {
   }
 };
 
-
 function mostrarToast(mensaje) {
   const toast = document.getElementById('toast');
   toast.textContent = mensaje;
@@ -75,6 +78,7 @@ function mostrarToast(mensaje) {
   setTimeout(() => toast.classList.add('hidden'), 2500);
 }
 
+// Filtro por nombre
 if (inputBusqueda) {
   inputBusqueda.addEventListener("input", () => {
     const termino = inputBusqueda.value.toLowerCase();
@@ -85,7 +89,6 @@ if (inputBusqueda) {
       if (nombre && nombre.toLowerCase().includes(termino)) {
         carta.style.display = "flex";
       } else if (!nombre && termino === "") {
-        // Mostrar también las bloqueadas si no hay término de búsqueda
         carta.style.display = "flex";
       } else {
         carta.style.display = "none";
@@ -94,17 +97,14 @@ if (inputBusqueda) {
   });
 }
 
+// Filtro por tipo
 botonesTipo.forEach(btn => {
   btn.addEventListener("click", () => {
     const tipoSeleccionado = btn.dataset.tipo;
 
-    // Quitar clase "activo" de todos
     botonesTipo.forEach(b => b.classList.remove("activo"));
-
-    // Agregar clase solo al clicado
     btn.classList.add("activo");
 
-    // Mostrar cartas según tipo
     document.querySelectorAll(".carta").forEach(carta => {
       const tipoCarta = carta.getAttribute("data-tipo");
       if (!tipoCarta) return;
@@ -117,4 +117,3 @@ botonesTipo.forEach(btn => {
     });
   });
 });
-

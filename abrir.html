@@ -13,16 +13,21 @@
     <img src="assets/img/logo.png" alt="Pokémon Logo" class="logo" />
     <h1 class="titulo">Abrir un sobre</h1>
 
-    <!-- Contenedor del sobre -->
+    <!-- Contenedor del sobre y cartas -->
     <div id="sobre-contenedor" class="sobre-contenedor">
       
-      <!-- Brillo amarillo estilo explosión -->
-      <div id="destello" class="destello hidden"></div>
+      <!-- Destello animado (nuevo destello localizado arriba del sobre) -->
+      <div id="destello-css" class="destello-css"></div>
 
-      <!-- Cartas volando en acordeón -->
+      <!-- Carta individual (inspección una por una) -->
+      <div id="carta-individual" class="carta-individual oculto">
+        <img id="img-carta" src="" alt="Carta actual" />
+      </div>
+
+      <!-- Cartas animadas (acordeón después de abrir) -->
       <div id="cartas-animadas" class="cartas-animadas"></div>
 
-      <!-- Imagen del sobre (cerrado o abierto) -->
+      <!-- Imagen del sobre -->
       <img 
         src="assets/img/SobrePokemon (2).png" 
         alt="Sobre cerrado" 
@@ -30,15 +35,14 @@
         class="sobre-img"
       >
 
-      <!-- Botón de abrir -->
-      <button id="btnAbrirSobre" class="boton-sobre">ABRIR SOBRE</button>
+      <!-- Botón abrir -->
+      <button id="btnAbrirSobre" class="boton-sobre tipo-btn tipo-electric borde-dorado">
+        ABRIR SOBRE
+      </button>
     </div>
-
-    <!-- Galería con las cartas reveladas -->
-    <div id="cartas-reveladas" class="cartas-reveladas oculto"></div>
   </div>
 
-  <!-- Nueva navbar -->
+  <!-- Navegación inferior -->
   <nav class="navbar">
     <a href="index.html" class="nav-item">
       <img src="assets/icons/pcard.svg" alt="Colección" />
@@ -58,9 +62,3 @@
   <script type="module" src="js/abrir.js"></script>
 </body>
 </html>
-
-
-
-
-
-
