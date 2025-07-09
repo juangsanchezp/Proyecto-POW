@@ -17,13 +17,6 @@
     <!-- Grid de cartas -->
     <div class="grid-cartas"></div>
 
-    <!-- Botones de navegación -->
-    <div class="bottom-nav">
-      <button onclick="navegar('coleccion')">Tu colección</button>
-      <button onclick="navegar('abrir')">Abrir un sobre</button>
-      <button onclick="window.location.href='intercambiar.html'">Intercambiar cartas</button>
-    </div>
-
     <!-- Toast de notificaciones -->
     <div id="toast" class="toast hidden">Mensaje</div>
   </div>
@@ -36,7 +29,24 @@
     </div>
   </div>
 
+  <!-- Nueva navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-item">
+      <img src="assets/icons/library.svg" alt="Colección" />
+      <span>Colección</span>
+    </a>
+    <a href="abrir.html" class="nav-item">
+      <img src="assets/icons/gift.svg" alt="Sobres" />
+      <span>Sobres</span>
+    </a>
+    <a href="intercambiar.html" class="nav-item">
+      <img src="assets/icons/refresh-cw.svg" alt="Intercambio" />
+      <span>Intercambio</span>
+    </a>
+  </nav>
+
   <!-- JavaScript principal -->
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
+

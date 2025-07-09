@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Abrir un sobre</title>
+  <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/abrir.css" />
 </head>
 <body>
@@ -35,17 +36,29 @@
 
     <!-- Galería con las cartas reveladas -->
     <div id="cartas-reveladas" class="cartas-reveladas oculto"></div>
-
-    <!-- Navegación inferior -->
-    <div class="bottom-nav">
-      <button onclick="window.location.href='index.html'">Tu colección</button>
-    </div>
   </div>
+
+  <!-- Nueva navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-item">
+      <img src="assets/icons/library.svg" alt="Colección" />
+      <span>Colección</span>
+    </a>
+    <a href="abrir.html" class="nav-item">
+      <img src="assets/icons/gift.svg" alt="Sobres" />
+      <span>Sobres</span>
+    </a>
+    <a href="intercambiar.html" class="nav-item">
+      <img src="assets/icons/refresh-cw.svg" alt="Intercambio" />
+      <span>Intercambio</span>
+    </a>
+  </nav>
 
   <!-- Script funcional -->
   <script type="module" src="js/abrir.js"></script>
 </body>
 </html>
+
 
 
 

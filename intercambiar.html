@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Intercambiar Cartas</title>
+  <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/intercambiar.css" />
 </head>
 <body>
@@ -43,15 +44,25 @@
 
     <!-- Toast de notificación -->
     <div id="toast" class="toast hidden">Mensaje</div>
-
-    <!-- Navegación inferior -->
-    <div class="bottom-nav">
-      <button onclick="window.location.href='index.html'">Tu colección</button>
-      <button onclick="window.location.href='abrir.html'">Abrir un sobre</button>
-      <button onclick="window.location.href='intercambiar.html'">Intercambiar cartas</button>
-    </div>
   </div>
+
+  <!-- Nueva navbar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-item">
+      <img src="assets/icons/library.svg" alt="Colección" />
+      <span>Colección</span>
+    </a>
+    <a href="abrir.html" class="nav-item">
+      <img src="assets/icons/gift.svg" alt="Sobres" />
+      <span>Sobres</span>
+    </a>
+    <a href="intercambiar.html" class="nav-item">
+      <img src="assets/icons/refresh-cw.svg" alt="Intercambio" />
+      <span>Intercambio</span>
+    </a>
+  </nav>
 
   <script type="module" src="js/intercambiar.js"></script>
 </body>
 </html>
+
