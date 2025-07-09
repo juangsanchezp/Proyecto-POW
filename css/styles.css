@@ -235,3 +235,67 @@ body {
   color: #ffcb05;
 }
 
+.search-bar {
+  width: 80%;
+  max-width: 400px;
+  padding: 0.6rem 1rem;
+  margin: 0 auto 1rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+/* Estilo base de los botones */
+.tipo-btn {
+  color: white;
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.tipo-btn:hover {
+  filter: brightness(1.2);
+  transform: scale(1.1);
+}
+
+.filtros-tipo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem auto;
+  max-width: 600px;
+}
+
+.tipo-btn:active {
+  transform: scale(0.95);
+}
+
+/* Colores personalizados por tipo */
+.tipo-normal { background-color: #A8A77A; }
+.tipo-fire { background-color: #EE8130; }
+.tipo-water { background-color: #6390F0; }
+.tipo-electric { background-color: #F7D02C; color: #000; }
+.tipo-grass { background-color: #7AC74C; }
+.tipo-ice { background-color: #96D9D6; color: #000; }
+.tipo-fighting { background-color: #C22E28; }
+.tipo-poison { background-color: #A33EA1; }
+.tipo-ground { background-color: #E2BF65; color: #000; }
+.tipo-flying { background-color: #A98FF3; }
+.tipo-psychic { background-color: #F95587; }
+.tipo-bug { background-color: #A6B91A; color: #000; }
+.tipo-rock { background-color: #B6A136; color: #000; }
+.tipo-ghost { background-color: #735797; }
+.tipo-dragon { background-color: #6F35FC; }
+.tipo-dark { background-color: #705746; }
+.tipo-steel { background-color: #B7B7CE; color: #000; }
+.tipo-fairy { background-color: #D685AD; }
+.tipo-all { background-color: #555; }
+
+

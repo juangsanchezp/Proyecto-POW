@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tu colección Pokémon</title>
+  <title>Tu Colección</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -12,7 +12,41 @@
     <img src="assets/img/logo.png" alt="Pokémon Logo" class="logo"/>
 
     <!-- Título principal -->
-    <h1 class="titulo">Tu colección</h1>
+    <h1 class="titulo">Tu Colección</h1>
+
+    <!-- Barra de búsqueda -->
+    <input 
+      type="text" 
+      id="search-input" 
+      placeholder="Buscar Pokémon..." 
+      class="search-bar" 
+    />
+
+    <!-- Filtros por tipo -->
+    <div id="filtros-tipo" class="filtros-tipo">
+      <button class="tipo-btn tipo-all" data-tipo="all">Todos</button>
+      <button class="tipo-btn tipo-normal" data-tipo="normal">Normal</button>
+      <button class="tipo-btn tipo-fire" data-tipo="fire">Fire</button>
+      <button class="tipo-btn tipo-water" data-tipo="water">Water</button>
+      <button class="tipo-btn tipo-grass" data-tipo="grass">Grass</button>
+      <button class="tipo-btn tipo-electric" data-tipo="electric">Electric</button>
+      <button class="tipo-btn tipo-ice" data-tipo="ice">Ice</button>
+      <button class="tipo-btn tipo-fighting" data-tipo="fighting">Fighting</button>
+      <button class="tipo-btn tipo-poison" data-tipo="poison">Poison</button>
+      <button class="tipo-btn tipo-ground" data-tipo="ground">Ground</button>
+      <button class="tipo-btn tipo-flying" data-tipo="flying">Flying</button>
+      <button class="tipo-btn tipo-psychic" data-tipo="psychic">Psychic</button>
+      <button class="tipo-btn tipo-bug" data-tipo="bug">Bug</button>
+      <button class="tipo-btn tipo-rock" data-tipo="rock">Rock</button>
+      <button class="tipo-btn tipo-ghost" data-tipo="ghost">Ghost</button>
+      <button class="tipo-btn tipo-dragon" data-tipo="dragon">Dragon</button>
+      <button class="tipo-btn tipo-dark" data-tipo="dark">Dark</button>
+      <button class="tipo-btn tipo-steel" data-tipo="steel">Steel</button>
+      <button class="tipo-btn tipo-fairy" data-tipo="fairy">Fairy</button>
+    </div>
+
+
+
 
     <!-- Grid de cartas -->
     <div class="grid-cartas"></div>
