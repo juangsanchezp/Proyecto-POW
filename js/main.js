@@ -95,10 +95,16 @@ botonesTipo.forEach(btn => {
   btn.addEventListener("click", () => {
     const tipoSeleccionado = btn.dataset.tipo;
 
+    // Quitar clase "activo" de todos
+    botonesTipo.forEach(b => b.classList.remove("activo"));
+
+    // Agregar clase solo al clicado
+    btn.classList.add("activo");
+
+    // Mostrar cartas según tipo
     document.querySelectorAll(".carta").forEach(carta => {
       const tipoCarta = carta.getAttribute("data-tipo");
-
-      if (!tipoCarta) return; // carta bloqueada
+      if (!tipoCarta) return;
 
       if (tipoSeleccionado === "all" || tipoCarta.includes(tipoSeleccionado)) {
         carta.style.display = "flex";

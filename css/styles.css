@@ -277,6 +277,12 @@ body {
   transform: scale(0.95);
 }
 
+.tipo-btn.activo {
+  outline: 3px solid white;
+  outline-offset: 2px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
 /* Colores personalizados por tipo */
 .tipo-normal { background-color: #A8A77A; }
 .tipo-fire { background-color: #EE8130; }
