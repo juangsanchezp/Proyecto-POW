@@ -5,17 +5,9 @@
   box-sizing: border-box;
 }
 
-body {
-  font-family: 'Pokemon Solid', sans-serif;
-  background-color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
 /* ========== CARTA PRINCIPAL ========== */
 .card-container {
+  font-family: 'Pokemon Solid', sans-serif;
   width: 100%;
   max-width: 280px; /* adapta según el ancho máximo deseado */
   margin: 0 auto;
@@ -145,19 +137,18 @@ body {
 /* ========== SOBREPOSICIÓN / MODAL ========== */
 .vista-carta,
 .carta-overlay {
-  position: absolute; /* antes era fixed */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.1); /* mucho más transparente */
-  backdrop-filter: blur(3px);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.244); /* ← Fondo mucho más suave */
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 20;
+  z-index: 9999;
 }
-
 
 /* ========== OTROS ========== */
 .card-wrapper {

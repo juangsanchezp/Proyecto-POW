@@ -9,6 +9,7 @@ import { crearVistaCarta } from './carta.js';
 const grid = document.querySelector('.grid-cartas');
 const inputBusqueda = document.getElementById("search-input");
 const botonesTipo = document.querySelectorAll(".tipo-btn");
+let filtroActivo = "all";
 
 document.addEventListener('DOMContentLoaded', () => {
   let coleccion = obtenerColeccion();
@@ -47,11 +48,22 @@ function cargarCartas(coleccion) {
         carta.appendChild(img);
         carta.addEventListener('click', () => {
           const overlay = document.getElementById('detalle-carta-personalizada');
-          overlay.innerHTML = ''; // Limpiar si había otra carta
+
+          // Si el overlay está visible, cerramos la carta y reaplicamos filtro
+          if (!overlay.classList.contains('hidden')) {
+            overlay.classList.add('hidden');
+            overlay.innerHTML = '';
+            volverAplicarFiltro();
+            return;
+          }
+
+          // Si está oculto, mostramos la nueva carta
           const nuevaCarta = crearVistaCarta(pokemon);
+          overlay.innerHTML = ''; // Limpiar por si acaso
           overlay.appendChild(nuevaCarta);
           overlay.classList.remove('hidden');
         });
+
       });
     } else {
       carta.classList.add('bloqueada');
@@ -60,6 +72,7 @@ function cargarCartas(coleccion) {
         img.src = pokemon.sprites.other['official-artwork'].front_default;
         img.alt = pokemon.name;
         img.classList.add('silueta');
+        carta.setAttribute("data-tipo", pokemon.types.map(t => t.type.name).join(" "));
         carta.appendChild(img);
       });
     }
@@ -115,16 +128,28 @@ if (inputBusqueda) {
  */
 botonesTipo.forEach(btn => {
   btn.addEventListener("click", () => {
-    const tipoSeleccionado = btn.dataset.tipo;
+    filtroActivo = btn.dataset.tipo;
 
     botonesTipo.forEach(b => b.classList.remove("activo"));
     btn.classList.add("activo");
 
     document.querySelectorAll(".carta").forEach(carta => {
       const tipoCarta = carta.getAttribute("data-tipo");
-      if (!tipoCarta) return;
+      const estaBloqueada = carta.classList.contains("bloqueada");
 
-      if (tipoSeleccionado === "all" || tipoCarta.includes(tipoSeleccionado)) {
+      if (!tipoCarta) {
+        carta.style.display = "none";
+        return;
+      }
+
+      // 👉 Caso "Todos": mostrar todo
+      if (filtroActivo === "all") {
+        carta.style.display = "flex";
+        return;
+      }
+
+      // 👉 Otros tipos: solo desbloqueados que coincidan con el tipo
+      if (!estaBloqueada && tipoCarta.includes(filtroActivo)) {
         carta.style.display = "flex";
       } else {
         carta.style.display = "none";

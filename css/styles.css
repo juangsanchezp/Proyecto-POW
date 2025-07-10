@@ -110,7 +110,7 @@ body {
 }
 
 .bloqueada {
-  background-color: rgba(0, 0, 0, 0.5) !important;
+  background-color: rgba(42, 42, 42, 0.5) !important;
   border: none !important;
   filter: grayscale(100%) brightness(0.4);
   position: relative;
