@@ -57,15 +57,15 @@
 
   <!-- Navegación inferior -->
   <nav class="navbar">
-    <a href="index.html" class="nav-item" id="btnColeccion">
+    <a href="index.html" class="nav-item">
       <img src="assets/icons/pcard.svg" alt="Colección" />
       <span>Colección</span>
     </a>
-    <a href="abrir.html" class="nav-item" id="btnAbrir">
+    <a href="abrir.html" class="nav-item">
       <img src="assets/icons/pack.svg" alt="Sobres" />
       <span>Sobres</span>
     </a>
-    <a href="intercambiar.html" class="nav-item" id="btnIntercambiarNav">
+    <a href="intercambiar.html" class="nav-item">
       <img src="assets/icons/intercambio.svg" alt="Intercambio" />
       <span>Intercambio</span>
     </a>
@@ -73,26 +73,6 @@
 
   <!-- Scripts -->
   <script type="module" src="js/intercambiar.js"></script>
-
-  <!-- Script para marcar nav activo -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const currentPage = window.location.pathname.split('/').pop();
-      const botones = {
-        'index.html': 'btnColeccion',
-        'abrir.html': 'btnAbrir',
-        'intercambiar.html': 'btnIntercambiarNav'
-      };
-
-      const botonActivoId = botones[currentPage];
-      if (botonActivoId) {
-        const btn = document.getElementById(botonActivoId);
-        if (btn) {
-          btn.classList.add('active');
-        }
-      }
-    });
-  </script>
 </body>
 </html>
 
