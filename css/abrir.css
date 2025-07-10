@@ -1,4 +1,3 @@
-/* === CONTENEDOR PRINCIPAL === */
 .contenedor {
   display: flex;
   flex-direction: column;
@@ -7,7 +6,6 @@
   position: relative;
 }
 
-/* === TÍTULO === */
 .titulo {
   font-size: 2.5rem;
   color: #ffcb05;
@@ -16,7 +14,93 @@
   margin-bottom: 2rem;
 }
 
-/* === CARTAS EN ARCO === */
+.sobre-contenedor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 4rem;
+  z-index: 2;
+}
+
+.sobre-img {
+  width: 180px;
+  transition: transform 0.8s ease;
+  z-index: 2;
+}
+
+.sobre-img.bajando {
+  transform: translateY(40px);
+}
+
+.destello-css {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 220px;
+  height: 100px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 100, 0.8) 0%, rgba(255, 255, 0, 0.2) 70%, transparent 100%);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.destello-css.activo {
+  animation: destelloAnimCSS 1s ease-out forwards;
+}
+
+@keyframes destelloAnimCSS {
+  0% {
+    transform: translateX(-50%) scale(0.5);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.4);
+    opacity: 0;
+  }
+}
+
+.boton-sobre {
+  position: relative;
+  z-index: 6;
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  border: 3px solid gold;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.boton-sobre:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px gold;
+}
+
+.boton-sobre:disabled {
+  opacity: 0.7;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ccc;
+  border-color: #d4af37;
+  box-shadow: none;
+}
+
+/* Cartas animadas en arco */
 .cartas-animadas {
   position: absolute;
   top: -120px;
@@ -55,160 +139,20 @@
   object-fit: contain;
 }
 
-/* === SOBRE === */
-.sobre-contenedor {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 4rem;
-  z-index: 2;
-}
-
-.sobre-img {
-  width: 180px;
-  transition: transform 0.8s ease;
-  z-index: 2;
-}
-.sobre-img.bajando {
-  transform: translateY(40px);
-}
-
-/* === DESTELLO (CSS PURO) === */
-.destello {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%) scale(0);
-  width: 220px;
-  height: 100px;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 100, 0.8) 0%, rgba(255, 255, 0, 0.2) 70%, transparent 100%);
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.destello.activo {
-  animation: destelloAnimCSS 1s ease-out forwards;
-}
-
-@keyframes destelloAnimCSS {
-  0% {
-    transform: translateX(-50%) scale(0.5);
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-50%) scale(1.4);
-    opacity: 0;
-  }
-}
-
-/* === BOTÓN === */
-.boton-sobre {
-  position: relative;
-  z-index: 6;
-  margin-top: 1rem;
-  padding: 0.75rem 2rem;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: white;
-  border: 3px solid gold;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-}
-
-.boton-sobre:hover {
-  transform: scale(1.05);
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 15px gold;
-}
-
-.boton-sobre:disabled {
-  opacity: 0.7;
-  cursor: default;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ccc;
-  border-color: #d4af37;
-  box-shadow: none;
-}
-
-/* === CARTA INDIVIDUAL MAXIMIZADA === */
-.carta-individual {
+/* Carta emergente generada */
+.carta-overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 220px;
-  height: 310px;
-  border-radius: 16px;
-  border: 5px solid gold;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-  transform: translate(-50%, -50%) scale(0.8);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 100;
-  animation: aparecerCarta 0.4s ease;
-  opacity: 0;
+  align-items: center;
+  z-index: 9999;
 }
 
-.carta-individual img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-.carta-individual.mostrar {
-  animation: aparecerCarta 0.4s ease forwards;
-}
-
-.carta-individual.visible {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-  pointer-events: all;
-}
-
-@keyframes aparecerCarta {
-  from {
-    transform: translate(-50%, -60%) scale(0.5);
-    opacity: 0;
-  }
-  to {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-}
-
-.oculto {
+.hidden {
   display: none !important;
 }
-
-/* === FONDOS DE CARTA-INDIVIDUAL SEGÚN TIPO === */
-.carta-individual.tipo-normal     { background-color: #A8A77A; }
-.carta-individual.tipo-fire       { background-color: #EE8130; }
-.carta-individual.tipo-water      { background-color: #6390F0; }
-.carta-individual.tipo-electric   { background-color: #F7D02C; color: #000; }
-.carta-individual.tipo-grass      { background-color: #7AC74C; }
-.carta-individual.tipo-ice        { background-color: #96D9D6; color: #000; }
-.carta-individual.tipo-fighting   { background-color: #C22E28; }
-.carta-individual.tipo-poison     { background-color: #A33EA1; }
-.carta-individual.tipo-ground     { background-color: #E2BF65; color: #000; }
-.carta-individual.tipo-flying     { background-color: #A98FF3; }
-.carta-individual.tipo-psychic    { background-color: #F95587; }
-.carta-individual.tipo-bug        { background-color: #A6B91A; color: #000; }
-.carta-individual.tipo-rock       { background-color: #B6A136; color: #000; }
-.carta-individual.tipo-ghost      { background-color: #735797; }
-.carta-individual.tipo-dragon     { background-color: #6F35FC; }
-.carta-individual.tipo-dark       { background-color: #705746; }
-.carta-individual.tipo-steel      { background-color: #B7B7CE; color: #000; }
-.carta-individual.tipo-fairy      { background-color: #D685AD; }
