@@ -1,3 +1,5 @@
+// js/constantes.js
+
 export const EVENTOS_ABLY = {
-  CARTA_ENVIADA: 'carta-seleccionada'
+  CARTA_ENVIADA: 'carta-enviada'
 };

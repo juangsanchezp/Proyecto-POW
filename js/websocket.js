@@ -1,25 +1,39 @@
+// websocket.js
 import { EVENTOS_ABLY } from './constantes.js';
 
 const API_KEY = 'MWXZ8A.Rb8fxg:JsF3dAa7mrzTJ2XPtxTDIiNt7Lvw2PHnjrdOlzBXtqY';
-const canalNombre = 'canal-intercambio';
+let canal = null;
 
-let canal;
-
-export function conectarWebSocket(nombreUsuario) {
+/**
+ * Conecta al canal de Ably usando un código de sala y alias de usuario
+ * @param {string} nombreSala - Código único de la sala (ej: 'A1B2C3')
+ * @param {string} aliasUsuario - Alias único del jugador (ej: 'Juan')
+ * @param {function} onMensajeRecibido - Función que se ejecuta al recibir carta del otro jugador
+ */
+export function conectarWebSocket(nombreSala, aliasUsuario, onMensajeRecibido) {
   const ably = new Ably.Realtime(API_KEY);
-  canal = ably.channels.get(canalNombre);
+  const nombreCanal = `sala-${nombreSala}`;
+  canal = ably.channels.get(nombreCanal);
 
-  // Escuchar mensajes del canal
   canal.subscribe(EVENTOS_ABLY.CARTA_ENVIADA, (mensaje) => {
     const carta = mensaje.data;
-    // Solo mostrar si es del otro jugador
-    if (carta.usuario !== nombreUsuario) {
-      const evento = new CustomEvent('cartaRecibida', { detail: carta });
-      window.dispatchEvent(evento);
+
+    // Ignorar mensajes del mismo usuario
+    if (carta.alias !== aliasUsuario) {
+      onMensajeRecibido(carta);
     }
   });
 }
 
-export function enviarCartaIntercambio(usuario, carta) {
-  canal.publish(EVENTOS_ABLY.CARTA_ENVIADA, { ...carta, usuario });
+/**
+ * Envía una carta al canal actual con alias incluido
+ * @param {string} alias - Alias del jugador que envía la carta
+ * @param {object} carta - Objeto con datos de la carta
+ */
+export function enviarCarta(alias, carta) {
+  if (canal) {
+    canal.publish(EVENTOS_ABLY.CARTA_ENVIADA, { ...carta, alias });
+  }
 }
+
+

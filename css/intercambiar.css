@@ -32,40 +32,47 @@ body {
   margin: 0.8rem 0 2rem;
 }
 
-/* Modal selector usuario */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-}
-
-.modal {
-  background: white;
-  color: #333;
+/* Panel crear/unirse */
+.panel-crear-unirse {
+  background-color: rgba(255,255,255,0.15);
+  border: 2px solid #ffcb05;
+  border-radius: 20px;
   padding: 2rem;
-  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto 2rem;
   text-align: center;
-  max-width: 320px;
 }
 
-.modal button {
+.panel-crear-unirse input,
+.panel-crear-unirse button {
   display: block;
-  margin: 1rem auto;
-  padding: 0.8rem 1.5rem;
-  background: linear-gradient(to bottom, #ffcb05, #f5a623);
-  color: #2a2a2a;
-  border: 2px solid #3b4cca;
-  font-weight: bold;
+  width: 100%;
+  margin: 0.8rem 0;
+  padding: 0.8rem;
+  border-radius: 10px;
   font-size: 1rem;
-  border-radius: 12px;
+  border: none;
+}
+
+.panel-crear-unirse input {
+  border: 1px solid #ccc;
+  outline: none;
+  font-family: sans-serif;
+  color: #333;
+}
+
+.panel-crear-unirse button {
+  background: linear-gradient(to bottom, #ffcb05, #f5a623);
+  border: 2px solid #3b4cca;
+  color: #2a2a2a;
+  font-weight: bold;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.panel-crear-unirse button:hover {
+  transform: scale(1.05);
 }
 
 /* Zona de intercambio */
@@ -233,4 +240,83 @@ body {
   .intercambio-icono {
     margin: 1rem 0;
   }
+}
+
+/* === MODALES FLOTANTES === */
+.hidden {
+  display: none !important;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 2px solid #ffcb05;
+  border-radius: 20px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal h2 {
+  color: #ffcb05;
+  margin-bottom: 1rem;
+}
+
+.modal input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: sans-serif;
+  color: #333;
+  outline: none;
+}
+
+.modal button {
+  width: 100%;
+  padding: 0.8rem;
+  background: linear-gradient(to bottom, #ffcb05, #f5a623);
+  border: 2px solid #3b4cca;
+  color: #2a2a2a;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.modal button:hover {
+  transform: scale(1.05);
+}
+
+/* Botones de abrir modales */
+.modal-buttons {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.modal-buttons button {
+  margin: 0 10px;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(to bottom, #ffcb05, #f5a623);
+  color: #2a2a2a;
+  border: 2px solid #3b4cca;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
 }

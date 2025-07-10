@@ -1,52 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Intercambiar Cartas</title>
+  <link rel="stylesheet" href="css/intercambiar.css">
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/intercambiar.css" />
+  <script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
 </head>
 <body>
-  <div class="contenedor">
 
-    <!-- Logo -->
-    <img src="assets/img/logo.png" alt="Pokémon Logo" class="logo" />
+  <img src="assets/img/logo_pokemon.png" alt="Logo Pokémon" class="logo" />
+  <h1 class="titulo">INTERCAMBIAR CARTAS</h1>
 
-    <!-- Título -->
-    <h1 class="titulo">INTERCAMBIAR CARTAS</h1>
-
-    <!-- Zona de intercambio -->
-    <div class="zona-intercambio">
-      <!-- Cartas del usuario -->
-      <div class="panel panel-usuario">
-        <h2>TUS CARTAS</h2>
-        <div id="cartasUsuario" class="cartas-grid"></div>
-      </div>
-
-      <!-- Flechas -->
-      <div class="intercambio-icono">
-        <span>⇄</span>
-      </div>
-
-      <!-- Carta del adversario -->
-      <div class="panel panel-adversario">
-        <h2>CARTAS DEL ADVERSARIO</h2>
-        <div id="cartaAdversario" class="carta-adversario">
-          <img src="assets/img/oculto.png" alt="Carta adversario bloqueada" />
-          <p>Esperando selección...</p>
-        </div>
-      </div>
+  <!-- Panel para crear o unirse a una sala -->
+  <div class="panel panel-crear-unirse">
+    <div>
+      <h2>Crear Sala</h2>
+      <input type="text" id="aliasCrear" placeholder="Tu alias">
+      <button onclick="crearSala()">Crear Sala</button>
     </div>
-
-    <!-- Botón de Intercambiar -->
-    <button id="btnIntercambiar" disabled>INTERCAMBIAR</button>
-
-    <!-- Toast de notificación -->
-    <div id="toast" class="toast hidden">Mensaje</div>
+    <div style="margin-top: 2rem;">
+      <h2>Unirse a Sala</h2>
+      <input type="text" id="aliasUnirse" placeholder="Tu alias">
+      <input type="text" id="codigoUnirse" placeholder="Código de sala">
+      <button onclick="unirseSala()">Unirse a Sala</button>
+    </div>
   </div>
 
-  <!-- Nueva navbar -->
+  <!-- Código de sala conectado -->
+  <div id="codigoSalaInfo" class="titulo"></div>
+
+  <!-- Zona de intercambio -->
+  <div class="zona-intercambio hidden">
+    <div class="panel">
+      <h2>TUS CARTAS</h2>
+      <div id="cartasUsuario" class="cartas-grid"></div>
+    </div>
+
+    <div class="intercambio-icono">⇄</div>
+
+    <div class="panel">
+      <h2>CARTAS DEL ADVERSARIO</h2>
+      <div id="cartaAdversario" class="carta-adversario">
+        <p>Carta adversario bloqueada<br>Esperando selección...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón para confirmar intercambio -->
+  <button id="btnIntercambiar" disabled>Intercambiar</button>
+
+  <!-- Toast -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Navegación inferior -->
   <nav class="navbar">
     <a href="index.html" class="nav-item">
       <img src="assets/icons/pcard.svg" alt="Colección" />
@@ -61,9 +69,12 @@
       <span>Intercambio</span>
     </a>
   </nav>
-  
-  <script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
+
+  <!-- Scripts -->
   <script type="module" src="js/intercambiar.js"></script>
 </body>
 </html>
+
+
+
 
