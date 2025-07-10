@@ -56,13 +56,16 @@ export function crearVistaCarta(pokemon) {
   contenedor.appendChild(statsContainer);
   overlay.appendChild(contenedor);
 
-  // Cierre al hacer clic fuera
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) {
-      document.body.innerHTML = '';
-      window.location.reload();
-    }
-  });
+  // Solo ejecutar esta parte si estamos en index.html (colección)
+  if (window.location.pathname.includes('index.html')) {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === contenedor || overlay) {
+        document.body.innerHTML = '';
+        window.location.reload();
+      }
+    });
+  }
+
 
   return overlay;
 }

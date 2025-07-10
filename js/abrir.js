@@ -77,8 +77,6 @@ btnAbrir.addEventListener('click', async () => {
     }
   };
 
-  cartaEmergente.addEventListener('click', avanzar);
-  cartaEmergente.addEventListener('touchstart', avanzar);
-
+  cartaEmergente.addEventListener('pointerdown', avanzar);
   await mostrarCarta();
 });
