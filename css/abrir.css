@@ -1,3 +1,22 @@
+/* === RESET Y BASE === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Pokemon Solid', sans-serif;
+  color: white;
+  background-image: url('../assets/img/fondo_estadio.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
 /* === CONTENEDOR PRINCIPAL === */
 .contenedor {
   display: flex;
@@ -14,6 +33,52 @@
   text-shadow: 2px 2px #3b4cca;
   text-align: center;
   margin-bottom: 2rem;
+}
+
+/* === SOBRE === */
+.sobre-contenedor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 4rem;
+  z-index: 2;
+}
+
+.sobre-img {
+  width: 180px;
+  transition: transform 0.8s ease;
+  z-index: 2;
+}
+
+.sobre-img.bajando {
+  transform: translateY(40px);
+}
+
+/* === DESTELLO (CSS PURO) === */
+.destello {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 220px;
+  height: 100px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 100, 0.8) 0%, rgba(255, 255, 0, 0.2) 70%, transparent 100%);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.destello.activo {
+  animation: destelloAnimCSS 1s ease-out forwards;
+}
+
+@keyframes destelloAnimCSS {
+  0%   { transform: translateX(-50%) scale(0.5); opacity: 0.5; }
+  50%  { opacity: 1; }
+  100% { transform: translateX(-50%) scale(1.4); opacity: 0; }
 }
 
 /* === CARTAS EN ARCO === */
@@ -55,64 +120,9 @@
   object-fit: contain;
 }
 
-/* === SOBRE === */
-.sobre-contenedor {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 4rem;
-  z-index: 2;
-}
-
-.sobre-img {
-  width: 180px;
-  transition: transform 0.8s ease;
-  z-index: 2;
-}
-.sobre-img.bajando {
-  transform: translateY(40px);
-}
-
-/* === DESTELLO (CSS PURO) === */
-.destello {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%) scale(0);
-  width: 220px;
-  height: 100px;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 100, 0.8) 0%, rgba(255, 255, 0, 0.2) 70%, transparent 100%);
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-
-.destello.activo {
-  animation: destelloAnimCSS 1s ease-out forwards;
-}
-
-@keyframes destelloAnimCSS {
-  0% {
-    transform: translateX(-50%) scale(0.5);
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(-50%) scale(1.4);
-    opacity: 0;
-  }
-}
-
-/* === BOTÓN === */
+/* === BOTÓN ABRIR SOBRE === */
 .boton-sobre {
-  position: relative;
-  z-index: 6;
-  margin-top: 1rem;
+  margin-top: 2rem;
   padding: 0.75rem 2rem;
   font-size: 1.1rem;
   font-weight: bold;
@@ -126,6 +136,7 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   cursor: pointer;
+  z-index: 6;
 }
 
 .boton-sobre:hover {
@@ -189,11 +200,7 @@
   }
 }
 
-.oculto {
-  display: none !important;
-}
-
-/* === FONDOS DE CARTA-INDIVIDUAL SEGÚN TIPO === */
+/* === TIPO DE FONDO DE CARTAS === */
 .carta-individual.tipo-normal     { background-color: #A8A77A; }
 .carta-individual.tipo-fire       { background-color: #EE8130; }
 .carta-individual.tipo-water      { background-color: #6390F0; }
@@ -212,3 +219,58 @@
 .carta-individual.tipo-dark       { background-color: #705746; }
 .carta-individual.tipo-steel      { background-color: #B7B7CE; color: #000; }
 .carta-individual.tipo-fairy      { background-color: #D685AD; }
+
+/* === NAVBAR INFERIOR === */
+/* ========== NUEVA NAVBAR ========== */
+.navbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 0.75rem;
+  padding: 8px 12px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.nav-item img {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 4px;
+  filter: brightness(1.4);
+}
+
+.nav-item:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.25); /* Fondo blanco translúcido */
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 10px 16px;
+  color: white;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.nav-item.active img {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 0, 0.8));
+}

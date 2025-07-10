@@ -23,19 +23,23 @@ body {
 
 /* Logo Pokémon */
 .logo {
-  width: 220px;
+  width: 260px;
   height: auto;
   display: block;
-  margin: 1.2rem auto 0;
+  margin: 2rem auto 0;
+  filter: drop-shadow(0 0 12px rgba(255, 203, 5, 0.8));
 }
 
 /* Título */
 .titulo {
-  font-size: 2.5rem;
-  color: #ffcb05;
-  text-shadow: 2px 2px #3b4cca;
-  text-align: center;
-  margin: 0.5rem 0 1rem;
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #ffe14d, #ff9100);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(255, 221, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.3);
+  letter-spacing: 2px;
 }
 
 /* Contenedor general */
@@ -223,13 +227,13 @@ body {
   left: 0;
   width: 100%;
   height: 70px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
   display: flex;
   justify-content: space-around;
   align-items: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-  z-index: 999;
+  z-index: 1000;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-item {
@@ -237,31 +241,44 @@ body {
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: #ffffffcc;
-  font-size: 0.7rem;
-  transition: color 0.3s ease;
+  color: white;
+  font-size: 0.75rem;
+  padding: 8px 12px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
 }
 
 .nav-item img {
   width: 24px;
   height: 24px;
   margin-bottom: 4px;
-  filter: brightness(1.3);
+  filter: brightness(1.4);
 }
 
 .nav-item:hover {
   color: #fff;
+  transform: scale(1.1);
 }
 
 .nav-item.active {
-  color: #ffcb05;
+  background: rgba(255, 255, 255, 0.25); /* Fondo blanco translúcido */
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 10px 16px;
+  color: white;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.nav-item.active img {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 0, 0.8));
 }
 
 .search-container {
   position: relative;
   width: 80%;
   max-width: 400px;
-  margin: 0 auto 1rem;
+  margin: 0rem auto 0.5rem;
 }
 
 .search-bar {
@@ -271,8 +288,8 @@ body {
   border-radius: 999px;
   border: none;
   background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
   color: #fff;
   outline: none;
   transition: all 0.3s ease;
@@ -295,7 +312,7 @@ body {
   transform: translateY(-50%);
   width: 18px;
   height: 18px;
-  filter: brightness(1.2);
+  filter: drop-shadow(0 0 4px rgba(255,255,255,0.5));
   pointer-events: none;
 }
 
@@ -303,17 +320,19 @@ body {
 .tipo-btn {
   color: white;
   border: none;
-  padding: 0.4rem 0.9rem;
+  padding: 0.4rem 1rem;
   border-radius: 999px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: 500;
   transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .tipo-btn:hover {
   filter: brightness(1.2);
   transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(255,255,255,0.4);
 }
 
 .filtros-tipo {
@@ -323,6 +342,7 @@ body {
   gap: 0.5rem;
   margin: 1rem auto;
   max-width: 600px;
+  margin: 0.5rem auto 1.5rem;
 }
 
 .tipo-btn:active {
@@ -330,10 +350,142 @@ body {
 }
 
 .tipo-btn.activo {
-  outline: 3px solid white;
+  outline: 2px solid #fff;
   outline-offset: 2px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+  transform: scale(1.05);
 }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at top center, rgba(255, 255, 255, 0.03), transparent 60%),
+              linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.6));
+  z-index: -1;
+}
+
+@keyframes flotar {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+
+.carta:not(.bloqueada) {
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.3),
+    0 0 18px rgba(255, 255, 150, 0.4) inset;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.carta.animada {
+  animation: aparecer 0.4s ease forwards;
+  opacity: 0;
+}
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.titulo-escritura {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #ffcb05;
+  width: 0;
+  animation: escribir 2s steps(12, end) forwards, parpadeo 0.75s step-end infinite;
+}
+
+@keyframes escribir {
+  from { width: 0 }
+  to { width: 13ch }
+}
+
+@keyframes parpadeo {
+  50% { border-color: transparent; }
+}
+
+.nav-item:hover img {
+  animation: rebote 0.5s ease;
+}
+
+@keyframes rebote {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.25); }
+  50%  { transform: scale(0.95); }
+  70%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.btn-abrir-sobre {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  padding: 0.8rem 1.2rem;
+  background-color: #ffcb05;
+  color: #3b4cca;
+  border: none;
+  border-radius: 999px;
+  font-weight: bold;
+  font-size: 1rem;
+  box-shadow: 0 0 16px rgba(255, 203, 5, 0.7);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  z-index: 999;
+}
+
+.btn-abrir-sobre:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 24px rgba(255, 255, 100, 0.8);
+}
+
+/* ========== PROGRESO ========== */
+.progreso-container {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-weight: bold;
+}
+
+.progreso-texto {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  display: inline-block;
+  margin-bottom: 0.4rem;
+}
+
+.barra-progreso-externa {
+  width: 90%;
+  max-width: 400px;
+  height: 14px; /* ligeramente más alta para dar presencia */
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  margin: 0 auto;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); /* sombreado sutil */
+}
+
+#barra-progreso-interna {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ffe14d, #ffb300, #ff9100);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 12px rgba(255, 203, 5, 0.6), 0 0 24px rgba(255, 203, 5, 0.2);
+}
+
 
 /* Colores personalizados por tipo */
 .tipo-normal { background-color: #A8A77A; }
@@ -356,5 +508,24 @@ body {
 .tipo-fairy { background-color: #D685AD; }
 .tipo-all { background-color: #555; }
 
+/* Hover brillante por tipo de Pokémon */
+.carta.tipo-fire:hover     { box-shadow: 0 0 20px #ff5722, 0 0 40px #ff5722; }
+.carta.tipo-water:hover    { box-shadow: 0 0 20px #2196f3, 0 0 40px #2196f3; }
+.carta.tipo-grass:hover    { box-shadow: 0 0 20px #66bb6a, 0 0 40px #66bb6a; }
+.carta.tipo-electric:hover { box-shadow: 0 0 20px #ffeb3b, 0 0 40px #ffeb3b; }
+.carta.tipo-ice:hover      { box-shadow: 0 0 20px #80deea, 0 0 40px #80deea; }
+.carta.tipo-psychic:hover  { box-shadow: 0 0 20px #f06292, 0 0 40px #f06292; }
+.carta.tipo-dark:hover     { box-shadow: 0 0 20px #8d6e63, 0 0 40px #8d6e63; }
+.carta.tipo-dragon:hover   { box-shadow: 0 0 20px #9575cd, 0 0 40px #9575cd; }
+.carta.tipo-ghost:hover    { box-shadow: 0 0 20px #7e57c2, 0 0 40px #7e57c2; }
+.carta.tipo-fighting:hover { box-shadow: 0 0 20px #e53935, 0 0 40px #e53935; }
+.carta.tipo-fairy:hover    { box-shadow: 0 0 20px #f48fb1, 0 0 40px #f48fb1; }
+.carta.tipo-steel:hover    { box-shadow: 0 0 20px #b0bec5, 0 0 40px #b0bec5; }
+.carta.tipo-rock:hover     { box-shadow: 0 0 20px #bcaaa4, 0 0 40px #bcaaa4; }
+.carta.tipo-ground:hover   { box-shadow: 0 0 20px #d7ccc8, 0 0 40px #d7ccc8; }
+.carta.tipo-bug:hover      { box-shadow: 0 0 20px #c0ca33, 0 0 40px #c0ca33; }
+.carta.tipo-poison:hover   { box-shadow: 0 0 20px #ab47bc, 0 0 40px #ab47bc; }
+.carta.tipo-flying:hover   { box-shadow: 0 0 20px #90caf9, 0 0 40px #90caf9; }
+.carta.tipo-normal:hover   { box-shadow: 0 0 20px #bdbdbd, 0 0 40px #bdbdbd; }
 
 

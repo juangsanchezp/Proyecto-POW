@@ -21,7 +21,7 @@ btnAbrir.addEventListener('click', async () => {
   await new Promise(resolve => setTimeout(resolve, 700));
   sobreImg.src = 'assets/img/SobreAbiertoPokemon (4).png';
 
-  // Obtener colección
+  // Obtener colección actual
   let coleccion = obtenerColeccion();
   const nuevasCartas = [];
   while (nuevasCartas.length < 5) {
@@ -30,6 +30,7 @@ btnAbrir.addEventListener('click', async () => {
       nuevasCartas.push(id);
     }
   }
+
   guardarColeccion([...new Set([...coleccion, ...nuevasCartas])]);
 
   let indice = 0;
@@ -88,4 +89,17 @@ btnAbrir.addEventListener('click', async () => {
   cartaIndividual.addEventListener('touchstart', avanzar);
 
   await mostrarCarta();
+});
+
+// === Activar automáticamente el botón de navegación correspondiente ===
+const currentPage = window.location.pathname.split('/').pop(); // abrir.html
+const navItems = document.querySelectorAll('.nav-item');
+
+navItems.forEach(item => {
+  const href = item.getAttribute('href');
+  if (href === currentPage) {
+    item.classList.add('active');
+  } else {
+    item.classList.remove('active');
+  }
 });

@@ -1,4 +1,3 @@
-// js/main.js
 import { obtenerPokemonPorId } from './api.js';
 import { mostrarModalPokemon } from './modal.js';
 import {
@@ -13,7 +12,7 @@ const botonesTipo = document.querySelectorAll(".tipo-btn");
 document.addEventListener('DOMContentLoaded', () => {
   let coleccion = obtenerColeccion();
 
-  // Si está vacío, agregar 3 iniciales
+  // Si está vacía, iniciar con 3 Pokémon iniciales
   if (coleccion.length === 0) {
     const iniciales = [6, 3, 9]; // Charizard, Venusaur, Blastoise
     guardarColeccion(iniciales);
@@ -21,8 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   cargarCartas(coleccion);
+  actualizarProgreso(coleccion);
+  marcarNavActiva(); // ⬅️ Aplica el estilo "active" al botón correspondiente
 });
 
+/**
+ * Cargar cartas al grid
+ */
 function cargarCartas(coleccion) {
   for (let id = 1; id <= 150; id++) {
     const carta = document.createElement('div');
@@ -33,27 +37,22 @@ function cargarCartas(coleccion) {
     if (coleccion.includes(id)) {
       obtenerPokemonPorId(id).then(pokemon => {
         if (!pokemon) return;
-
         img.src = pokemon.sprites.other['official-artwork'].front_default;
         img.alt = pokemon.name;
         carta.setAttribute("data-nombre", pokemon.name);
         carta.setAttribute("data-tipo", pokemon.types.map(t => t.type.name).join(" "));
         const tipoPrincipal = pokemon.types[0].type.name;
         carta.classList.add(`tipo-${tipoPrincipal}`);
-
         carta.appendChild(img);
         carta.addEventListener('click', () => mostrarModalPokemon(pokemon));
       });
     } else {
       carta.classList.add('bloqueada');
-
       obtenerPokemonPorId(id).then(pokemon => {
         if (!pokemon) return;
-
         img.src = pokemon.sprites.other['official-artwork'].front_default;
         img.alt = pokemon.name;
         img.classList.add('silueta');
-
         carta.appendChild(img);
       });
     }
@@ -62,7 +61,22 @@ function cargarCartas(coleccion) {
   }
 }
 
-// Botones inferiores
+/**
+ * Mostrar mensaje temporal
+ */
+function mostrarToast(mensaje) {
+  const toast = document.getElementById('toast');
+  toast.textContent = mensaje;
+  toast.classList.remove('hidden');
+
+  setTimeout(() => {
+    toast.classList.add('hidden');
+  }, 2500);
+}
+
+/**
+ * Navegación inferior (no usado activamente pero mantenido por si se requiere)
+ */
 window.navegar = function (seccion) {
   if (seccion === 'abrir') {
     window.location.href = 'abrir.html';
@@ -71,14 +85,9 @@ window.navegar = function (seccion) {
   }
 };
 
-function mostrarToast(mensaje) {
-  const toast = document.getElementById('toast');
-  toast.textContent = mensaje;
-  toast.classList.remove('hidden');
-  setTimeout(() => toast.classList.add('hidden'), 2500);
-}
-
-// Filtro por nombre
+/**
+ * Filtro por nombre
+ */
 if (inputBusqueda) {
   inputBusqueda.addEventListener("input", () => {
     const termino = inputBusqueda.value.toLowerCase();
@@ -86,6 +95,7 @@ if (inputBusqueda) {
 
     cartas.forEach(carta => {
       const nombre = carta.getAttribute("data-nombre");
+
       if (nombre && nombre.toLowerCase().includes(termino)) {
         carta.style.display = "flex";
       } else if (!nombre && termino === "") {
@@ -97,7 +107,9 @@ if (inputBusqueda) {
   });
 }
 
-// Filtro por tipo
+/**
+ * Filtro por tipo
+ */
 botonesTipo.forEach(btn => {
   btn.addEventListener("click", () => {
     const tipoSeleccionado = btn.dataset.tipo;
@@ -117,3 +129,39 @@ botonesTipo.forEach(btn => {
     });
   });
 });
+
+/**
+ * Actualiza la barra de progreso y el texto
+ */
+function actualizarProgreso(coleccion) {
+  const total = 150;
+  const cantidad = coleccion.length;
+  const porcentaje = Math.floor((cantidad / total) * 100);
+
+  const progresoTexto = document.getElementById('progreso-texto');
+  const barra = document.getElementById('barra-progreso-interna');
+
+  if (progresoTexto && barra) {
+    progresoTexto.textContent = `${cantidad}/150 Pokémon`;
+    barra.style.width = `${porcentaje}%`;
+  }
+}
+
+/**
+ * Detecta la sección actual y marca el botón como activo
+ */
+function marcarNavActiva() {
+  const ruta = window.location.pathname;
+  const archivo = ruta.substring(ruta.lastIndexOf('/') + 1);
+  const items = document.querySelectorAll(".nav-item");
+
+  items.forEach(item => {
+    const href = item.getAttribute("href");
+    if (href && archivo === href) {
+      item.classList.add("active");
+    } else {
+      item.classList.remove("active");
+    }
+  });
+}
+

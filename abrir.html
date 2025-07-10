@@ -15,27 +15,17 @@
 
     <!-- Contenedor del sobre y cartas -->
     <div id="sobre-contenedor" class="sobre-contenedor">
-      
-      <!-- Destello animado (nuevo destello localizado arriba del sobre) -->
       <div id="destello-css" class="destello-css"></div>
-
-      <!-- Carta individual (inspección una por una) -->
       <div id="carta-individual" class="carta-individual oculto">
         <img id="img-carta" src="" alt="Carta actual" />
       </div>
-
-      <!-- Cartas animadas (acordeón después de abrir) -->
       <div id="cartas-animadas" class="cartas-animadas"></div>
-
-      <!-- Imagen del sobre -->
       <img 
         src="assets/img/SobrePokemon (2).png" 
         alt="Sobre cerrado" 
         id="sobre-imagen" 
         class="sobre-img"
       >
-
-      <!-- Botón abrir -->
       <button id="btnAbrirSobre" class="boton-sobre tipo-btn tipo-electric borde-dorado">
         ABRIR SOBRE
       </button>
@@ -44,15 +34,15 @@
 
   <!-- Navegación inferior -->
   <nav class="navbar">
-    <a href="index.html" class="nav-item">
+    <a href="index.html" class="nav-item" id="btnColeccion">
       <img src="assets/icons/pcard.svg" alt="Colección" />
       <span>Colección</span>
     </a>
-    <a href="abrir.html" class="nav-item">
+    <a href="abrir.html" class="nav-item" id="btnAbrir">
       <img src="assets/icons/pack.svg" alt="Sobres" />
       <span>Sobres</span>
     </a>
-    <a href="intercambiar.html" class="nav-item">
+    <a href="intercambiar.html" class="nav-item" id="btnIntercambiar">
       <img src="assets/icons/intercambio.svg" alt="Intercambio" />
       <span>Intercambio</span>
     </a>
@@ -60,5 +50,25 @@
 
   <!-- Script funcional -->
   <script type="module" src="js/abrir.js"></script>
+
+  <!-- Activar botón activo dinámicamente -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentPage = window.location.pathname.split('/').pop();
+      const botones = {
+        'index.html': 'btnColeccion',
+        'abrir.html': 'btnAbrir',
+        'intercambiar.html': 'btnIntercambiar'
+      };
+
+      const botonActivoId = botones[currentPage];
+      if (botonActivoId) {
+        const btn = document.getElementById(botonActivoId);
+        if (btn) {
+          btn.classList.add('active');
+        }
+      }
+    });
+  </script>
 </body>
 </html>

@@ -90,6 +90,19 @@ window.addEventListener('DOMContentLoaded', () => {
     toast.classList.remove('hidden');
     setTimeout(() => toast.classList.add('hidden'), 3000);
   }
+
+  // === Activar automáticamente el botón de navegación correspondiente ===
+  const currentPage = window.location.pathname.split('/').pop(); // intercambiar.html
+  const navItems = document.querySelectorAll('.nav-item');
+
+  navItems.forEach(item => {
+    const href = item.getAttribute('href');
+    if (href === currentPage) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
 });
 
 

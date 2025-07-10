@@ -8,19 +8,28 @@
 </head>
 <body>
   <div class="contenedor">
+
     <!-- Logo Pokémon -->
-    <img src="assets/img/logo.png" alt="Pokémon Logo" class="logo"/>
+    <img src="assets/img/logo.png" alt="Pokémon Logo" class="logo" />
 
     <!-- Título principal -->
     <h1 class="titulo">Tu Colección</h1>
 
+    <!-- Progreso de colección -->
+    <div class="barra-progreso-container">
+      <div id="progreso-texto">0/150 Pokémon</div>
+      <div class="barra-progreso-externa">
+        <div id="barra-progreso-interna"></div>
+      </div>
+    </div>
+
     <!-- Barra de búsqueda -->
     <div class="search-container">
       <input 
-      type="text" 
-      id="search-input" 
-      placeholder="Buscar Pokémon..." 
-      class="search-bar" 
+        type="text" 
+        id="search-input" 
+        placeholder="Buscar Pokémon..." 
+        class="search-bar" 
       />
       <img src="./assets/icons/search.svg" alt="Buscar" class="search-icon">
     </div>
@@ -63,7 +72,7 @@
     </div>
   </div>
 
-  <!-- Nueva navbar -->
+  <!-- Barra de navegación inferior -->
   <nav class="navbar">
     <a href="index.html" class="nav-item">
       <img src="assets/icons/pcard.svg" alt="Colección" />
@@ -79,7 +88,20 @@
     </a>
   </nav>
 
-  <!-- JavaScript principal -->
+  <!-- Script principal -->
   <script type="module" src="js/main.js"></script>
+
+  <!-- Script para marcar el nav activo -->
+  <script>
+    const currentPage = window.location.pathname.split('/').pop();
+    document.querySelectorAll('.nav-item').forEach(item => {
+      if (item.getAttribute('href') === currentPage) {
+        item.classList.add('active');
+      } else {
+        item.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 </html>
+
