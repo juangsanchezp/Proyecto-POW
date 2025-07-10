@@ -1,20 +1,19 @@
 // js/intercambiar.js
 import { obtenerColeccion, guardarColeccion } from './storage.js';
 import { obtenerPokemonPorId } from './api.js';
-import { conectarWebSocket, enviarCarta } from './websocket.js';
+import { conectarWebSocket, enviarCartas } from './websocket.js';
 
 let rol = null;
 let alias = null;
 let codigoSala = null;
-let cartaSeleccionada = null;
-let cartaRecibida = null;
+let cartasSeleccionadas = [];
+let cartasRecibidas = [];
 
 const cartasUsuario = document.getElementById('cartasUsuario');
 const cartaAdversario = document.getElementById('cartaAdversario');
 const btnIntercambiar = document.getElementById('btnIntercambiar');
 const toast = document.getElementById('toast');
 
-// Evento de crear sala
 window.crearSala = () => {
   const aliasInput = document.getElementById('aliasCrear');
   alias = aliasInput.value.trim();
@@ -26,8 +25,8 @@ window.crearSala = () => {
   localStorage.setItem('alias', alias);
   localStorage.setItem('codigoSala', codigoSala);
 
-  conectarWebSocket(codigoSala, alias, (carta) => {
-    const evento = new CustomEvent('cartaRecibida', { detail: carta });
+  conectarWebSocket(codigoSala, alias, (cartas) => {
+    const evento = new CustomEvent('cartasRecibidas', { detail: cartas });
     window.dispatchEvent(evento);
   });
 
@@ -37,7 +36,6 @@ window.crearSala = () => {
   cargarCartasUsuario();
 };
 
-// Evento de unirse a sala
 window.unirseSala = () => {
   const aliasInput = document.getElementById('aliasUnirse');
   const codigoInput = document.getElementById('codigoUnirse');
@@ -50,8 +48,8 @@ window.unirseSala = () => {
   localStorage.setItem('alias', alias);
   localStorage.setItem('codigoSala', codigoSala);
 
-  conectarWebSocket(codigoSala, alias, (carta) => {
-    const evento = new CustomEvent('cartaRecibida', { detail: carta });
+  conectarWebSocket(codigoSala, alias, (cartas) => {
+    const evento = new CustomEvent('cartasRecibidas', { detail: cartas });
     window.dispatchEvent(evento);
   });
 
@@ -74,47 +72,67 @@ async function cargarCartasUsuario() {
     const carta = document.createElement('div');
     carta.className = 'carta-seleccionable';
     carta.innerHTML = `<img src="${datos.sprites.other['official-artwork'].front_default}" alt="${datos.name}">`;
-    carta.addEventListener('click', (e) => seleccionarCarta(id, datos, e));
+    carta.addEventListener('click', (e) => alternarSeleccion(id, datos, carta));
     cartasUsuario.appendChild(carta);
   }
 }
 
-function seleccionarCarta(id, datos, evento) {
-  cartaSeleccionada = {
-    id,
-    nombre: datos.name,
-    imagen: datos.sprites.other['official-artwork'].front_default
-  };
-  document.querySelectorAll('.carta-seleccionable').forEach(c => c.classList.remove('carta-seleccionada'));
-  evento.currentTarget.classList.add('carta-seleccionada');
-  enviarCarta(alias, cartaSeleccionada);
+function alternarSeleccion(id, datos, elementoCarta) {
+  const index = cartasSeleccionadas.findIndex(c => c.id === id);
+  if (index !== -1) {
+    cartasSeleccionadas.splice(index, 1);
+    elementoCarta.classList.remove('carta-seleccionada');
+  } else {
+    if (cartasSeleccionadas.length >= 5) {
+      mostrarToast('Máximo 5 cartas por intercambio');
+      return;
+    }
+    const nuevaCarta = {
+      id,
+      nombre: datos.name,
+      imagen: datos.sprites.other['official-artwork'].front_default
+    };
+    cartasSeleccionadas.push(nuevaCarta);
+    elementoCarta.classList.add('carta-seleccionada');
+  }
+
+  enviarCartas(alias, cartasSeleccionadas);
   verificarIntercambioListo();
 }
 
-window.addEventListener('cartaRecibida', (evento) => {
-  cartaRecibida = evento.detail;
-  actualizarCartaAdversario(cartaRecibida);
-  mostrarToast(`El otro jugador ofreció: ${cartaRecibida.nombre}`);
+window.addEventListener('cartasRecibidas', (evento) => {
+  cartasRecibidas = evento.detail;
+  actualizarCartasAdversario(cartasRecibidas);
+  mostrarToast(`El otro jugador ofreció ${cartasRecibidas.length} carta(s)`);
   verificarIntercambioListo();
 });
 
-function actualizarCartaAdversario(carta) {
-  cartaAdversario.innerHTML = `
-    <img src="${carta.imagen}" alt="${carta.nombre}" />
-    <p>${carta.nombre}</p>
-  `;
+function actualizarCartasAdversario(cartas) {
+  cartaAdversario.innerHTML = '';
+  for (const carta of cartas) {
+    const div = document.createElement('div');
+    div.className = 'carta-seleccionable';
+    div.innerHTML = `<img src="${carta.imagen}" alt="${carta.nombre}" />`;
+    cartaAdversario.appendChild(div);
+  }
 }
 
 function verificarIntercambioListo() {
-  btnIntercambiar.disabled = !(cartaSeleccionada && cartaRecibida);
+  const listo = cartasSeleccionadas.length >= 1 && cartasSeleccionadas.length <= 5 &&
+                cartasRecibidas.length >= 1 && cartasRecibidas.length <= 5;
+  btnIntercambiar.disabled = !listo;
 }
 
 btnIntercambiar.addEventListener('click', () => {
   const coleccion = obtenerColeccion();
-  const nuevaColeccion = coleccion.filter(id => id !== cartaSeleccionada.id);
-  if (!nuevaColeccion.includes(cartaRecibida.id)) {
-    nuevaColeccion.push(cartaRecibida.id);
+  const nuevaColeccion = coleccion.filter(id => !cartasSeleccionadas.some(c => c.id === id));
+
+  for (const carta of cartasRecibidas) {
+    if (!nuevaColeccion.includes(carta.id)) {
+      nuevaColeccion.push(carta.id);
+    }
   }
+
   guardarColeccion(nuevaColeccion);
   mostrarToast("¡Intercambio realizado!");
   btnIntercambiar.disabled = true;

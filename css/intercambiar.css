@@ -132,18 +132,23 @@ body {
 
 /* Carta del adversario */
 .carta-adversario {
-  width: 120px;
-  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .carta-adversario img {
-  width: 100%;
+  width: 80px;
+  height: 110px;
+  object-fit: contain;
   border-radius: 10px;
+  display: block;
+  margin: 0 auto;
 }
 
-.carta-adversario p {
-  margin-top: 0.5rem;
-}
+
 
 /* Flecha intercambio */
 .intercambio-icono {
