@@ -1,3 +1,4 @@
+
 /* === RESET Y BASE === */
 * {
   margin: 0;
@@ -26,7 +27,6 @@ body {
   position: relative;
 }
 
-/* === TÍTULO === */
 .titulo {
   font-size: 2.5rem;
   color: #ffcb05;
@@ -76,12 +76,55 @@ body {
 }
 
 @keyframes destelloAnimCSS {
-  0%   { transform: translateX(-50%) scale(0.5); opacity: 0.5; }
-  50%  { opacity: 1; }
-  100% { transform: translateX(-50%) scale(1.4); opacity: 0; }
+  0% {
+    transform: translateX(-50%) scale(0.5);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.4);
+    opacity: 0;
+  }
 }
 
-/* === CARTAS EN ARCO === */
+
+.boton-sobre {
+  position: relative;
+  z-index: 6;
+  margin-top: 1rem;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  border: 3px solid gold;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.boton-sobre:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 15px gold;
+}
+
+.boton-sobre:disabled {
+  opacity: 0.7;
+  cursor: default;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ccc;
+  border-color: #d4af37;
+  box-shadow: none;
+}
+
+/* Cartas animadas en arco */
 .cartas-animadas {
   position: absolute;
   top: -120px;
@@ -156,21 +199,22 @@ body {
 
 /* === CARTA INDIVIDUAL MAXIMIZADA === */
 .carta-individual {
+/* Carta emergente generada */
+.carta-overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 220px;
-  height: 310px;
-  border-radius: 16px;
-  border: 5px solid gold;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
-  transform: translate(-50%, -50%) scale(0.8);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  /* Fondo transparente y efecto flotante */
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(3px);
+
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 100;
-  animation: aparecerCarta 0.4s ease;
-  opacity: 0;
+  align-items: center;
+  z-index: 20;
 }
 
 .carta-individual img {
@@ -273,4 +317,9 @@ body {
 
 .nav-item.active img {
   filter: drop-shadow(0 0 6px rgba(255, 255, 0, 0.8));
+
+.hidden {
+  display: none !important;
+}
+}
 }

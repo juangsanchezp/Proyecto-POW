@@ -1,27 +1,24 @@
 import { obtenerPokemonPorId } from './api.js';
 import { obtenerColeccion, guardarColeccion } from './storage.js';
+import { crearVistaCarta } from './carta.js';
 
 const btnAbrir = document.getElementById('btnAbrirSobre');
 const sobreImg = document.getElementById('sobre-imagen');
 const cartasAnimadas = document.getElementById('cartas-animadas');
-const cartaIndividual = document.getElementById('carta-individual');
-const imgCarta = document.getElementById('img-carta');
-const destelloCSS = document.getElementById('destello-css'); // NUEVO
+const cartaEmergente = document.getElementById('carta-emergente');
+const destelloCSS = document.getElementById('destello-css');
 
 btnAbrir.addEventListener('click', async () => {
-  // Bajada del sobre
+  // Animación inicial
   sobreImg.classList.add('bajando');
+  destelloCSS.classList.remove('destello-css');
+  void destelloCSS.offsetWidth;
+  destelloCSS.classList.add('destello-css');
 
-  // Activar destello visual
-  destelloCSS.classList.remove('destello-css'); // reinicia animación
-  void destelloCSS.offsetWidth; // fuerza reflujo
-  destelloCSS.classList.add('destello-css'); // reaplica clase
-
-  // Esperar antes de cambiar imagen
   await new Promise(resolve => setTimeout(resolve, 700));
   sobreImg.src = 'assets/img/SobreAbiertoPokemon (4).png';
 
-  // Obtener colección actual
+  // Selección aleatoria
   let coleccion = obtenerColeccion();
   const nuevasCartas = [];
   while (nuevasCartas.length < 5) {
@@ -39,14 +36,10 @@ btnAbrir.addEventListener('click', async () => {
     const id = nuevasCartas[indice];
     const pokemon = await obtenerPokemonPorId(id);
 
-    imgCarta.src = pokemon.sprites.other['official-artwork'].front_default;
-    imgCarta.alt = pokemon.name;
-
-    cartaIndividual.className = 'carta-individual oculto';
-    void cartaIndividual.offsetWidth;
-    cartaIndividual.classList.remove('oculto');
-    cartaIndividual.classList.add('tipo-' + pokemon.types[0].type.name);
-    cartaIndividual.classList.add('mostrar');
+    const carta = crearVistaCarta(pokemon);
+    cartaEmergente.innerHTML = '';
+    cartaEmergente.appendChild(carta);
+    cartaEmergente.classList.remove('hidden');
   };
 
   const avanzar = async () => {
@@ -54,9 +47,9 @@ btnAbrir.addEventListener('click', async () => {
     if (indice < nuevasCartas.length) {
       await mostrarCarta();
     } else {
-      cartaIndividual.classList.add('oculto');
+      cartaEmergente.classList.add('hidden');
 
-      // Mostrar cartas en arco
+      // Mostrar todas en arco
       const angulos = [-25, -12, 0, 12, 25];
       const desplazamientosY = [30, 15, 0, 15, 30];
 
@@ -85,9 +78,7 @@ btnAbrir.addEventListener('click', async () => {
     }
   };
 
-  cartaIndividual.addEventListener('click', avanzar);
-  cartaIndividual.addEventListener('touchstart', avanzar);
-
+  cartaEmergente.addEventListener('pointerdown', avanzar);
   await mostrarCarta();
 });
 

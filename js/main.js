@@ -1,9 +1,10 @@
 import { obtenerPokemonPorId } from './api.js';
-import { mostrarModalPokemon } from './modal.js';
+// import { mostrarModalPokemon } from './modal.js';
 import {
   obtenerColeccion,
   guardarColeccion
 } from './storage.js';
+import { crearVistaCarta } from './carta.js';
 
 const grid = document.querySelector('.grid-cartas');
 const inputBusqueda = document.getElementById("search-input");
@@ -44,7 +45,13 @@ function cargarCartas(coleccion) {
         const tipoPrincipal = pokemon.types[0].type.name;
         carta.classList.add(`tipo-${tipoPrincipal}`);
         carta.appendChild(img);
-        carta.addEventListener('click', () => mostrarModalPokemon(pokemon));
+        carta.addEventListener('click', () => {
+          const overlay = document.getElementById('detalle-carta-personalizada');
+          overlay.innerHTML = ''; // Limpiar si había otra carta
+          const nuevaCarta = crearVistaCarta(pokemon);
+          overlay.appendChild(nuevaCarta);
+          overlay.classList.remove('hidden');
+        });
       });
     } else {
       carta.classList.add('bloqueada');
@@ -68,14 +75,11 @@ function mostrarToast(mensaje) {
   const toast = document.getElementById('toast');
   toast.textContent = mensaje;
   toast.classList.remove('hidden');
-
-  setTimeout(() => {
-    toast.classList.add('hidden');
-  }, 2500);
+  setTimeout(() => toast.classList.add('hidden'), 2500);
 }
 
 /**
- * Navegación inferior (no usado activamente pero mantenido por si se requiere)
+ * Navegación inferior (botón "abrir")
  */
 window.navegar = function (seccion) {
   if (seccion === 'abrir') {
@@ -86,7 +90,7 @@ window.navegar = function (seccion) {
 };
 
 /**
- * Filtro por nombre
+ * Filtro por nombre desde input
  */
 if (inputBusqueda) {
   inputBusqueda.addEventListener("input", () => {
@@ -95,7 +99,6 @@ if (inputBusqueda) {
 
     cartas.forEach(carta => {
       const nombre = carta.getAttribute("data-nombre");
-
       if (nombre && nombre.toLowerCase().includes(termino)) {
         carta.style.display = "flex";
       } else if (!nombre && termino === "") {
@@ -108,7 +111,7 @@ if (inputBusqueda) {
 }
 
 /**
- * Filtro por tipo
+ * Filtro por tipo desde botones
  */
 botonesTipo.forEach(btn => {
   btn.addEventListener("click", () => {
@@ -164,4 +167,5 @@ function marcarNavActiva() {
     }
   });
 }
+
 

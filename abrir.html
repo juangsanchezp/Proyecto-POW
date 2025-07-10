@@ -6,7 +6,9 @@
   <title>Abrir un sobre</title>
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/abrir.css" />
+  <link rel="stylesheet" href="css/carta.css" />
 </head>
+
 <body>
   <div class="contenedor">
     <!-- Logo y título -->
@@ -19,6 +21,14 @@
       <div id="carta-individual" class="carta-individual oculto">
         <img id="img-carta" src="" alt="Carta actual" />
       </div>
+
+      <!-- Destello animado -->
+      <div id="destello-css" class="destello-css"></div>
+
+      <!-- Carta emergente real -->
+      <div id="carta-emergente" class="carta-overlay hidden"></div>
+
+      <!-- Cartas animadas en arco -->
       <div id="cartas-animadas" class="cartas-animadas"></div>
       <img 
         src="assets/img/SobrePokemon (2).png" 
