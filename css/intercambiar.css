@@ -35,7 +35,7 @@ body {
 /* Panel crear/unirse */
 .panel-crear-unirse {
   background-color: rgba(255,255,255,0.15);
-  border: 2px solid #ffcb05;
+  border: none;
   border-radius: 20px;
   padding: 2rem;
   width: 90%;
@@ -63,9 +63,8 @@ body {
 }
 
 .panel-crear-unirse button {
-  background: linear-gradient(to bottom, #ffcb05, #f5a623);
-  border: 2px solid #3b4cca;
-  color: #2a2a2a;
+  background: linear-gradient(to bottom, #0099cc, #0077aa);
+  color: white;
   font-weight: bold;
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -82,32 +81,59 @@ body {
   align-items: flex-start;
   flex-wrap: wrap;
   padding: 0 1rem;
+  gap: 1rem;
 }
 
 /* Paneles */
-.panel {
-  background-color: rgba(255,255,255,0.1);
-  border: 2px solid #ffcb05;
+.zona-intercambio .panel {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: none;
   border-radius: 15px;
   padding: 1rem;
-  width: 300px;
-  min-height: 260px;
+  width: 360px;
+  max-height: 480px;
+  overflow-y: auto;
   text-align: center;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+}
+
+.zona-intercambio .panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.zona-intercambio .panel::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 4px;
 }
 
 .panel h2 {
-  color: #ffcb05;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 600;
   margin-bottom: 1rem;
+  text-shadow: 0 0 5px rgba(0,0,0,0.3);
 }
 
-/* Cartas del usuario */
+/* Cartas del usuario y adversario */
 .cartas-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   justify-content: center;
+  padding: 0 10px;
 }
 
+.carta-adversario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Cartas */
 .carta-seleccionable {
   width: 80px;
   height: 110px;
@@ -130,26 +156,6 @@ body {
   transform: scale(1.1);
 }
 
-/* Carta del adversario */
-.carta-adversario {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.carta-adversario img {
-  width: 80px;
-  height: 110px;
-  object-fit: contain;
-  border-radius: 10px;
-  display: block;
-  margin: 0 auto;
-}
-
-
-
 /* Flecha intercambio */
 .intercambio-icono {
   display: flex;
@@ -162,9 +168,9 @@ body {
 #btnIntercambiar {
   margin: 2rem auto;
   display: block;
-  background: linear-gradient(to bottom, #ffcb05, #f5a623);
-  color: #2a2a2a;
-  border: 2px solid #3b4cca;
+  background: linear-gradient(to bottom, #0099cc, #0077aa);
+  color: white;
+  border: none;
   font-weight: bold;
   font-size: 1.2rem;
   padding: 1rem 2rem;
@@ -237,9 +243,9 @@ body {
     align-items: center;
   }
 
-  .panel {
+  .zona-intercambio .panel {
     width: 90%;
-    margin-bottom: 1rem;
+    max-height: 400px;
   }
 
   .intercambio-icono {
@@ -308,7 +314,6 @@ body {
   transform: scale(1.05);
 }
 
-/* Botones de abrir modales */
 .modal-buttons {
   text-align: center;
   margin: 2rem 0;
@@ -325,3 +330,43 @@ body {
   border-radius: 12px;
   cursor: pointer;
 }
+
+/* === ESTADO DE ESPERA (centrado y moderno) === */
+.espera-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.pokeball-loader {
+  width: 40px;
+  height: 40px;
+  background-image: url('../assets/img/pokeball_icon.png');
+  background-size: cover;
+  animation: spin 1s linear infinite;
+  opacity: 0.8;
+}
+
+.mensaje-espera {
+  color: #ffffff;
+  font-style: italic;
+  text-align: center;
+  opacity: 0.85;
+  font-size: 1rem;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+

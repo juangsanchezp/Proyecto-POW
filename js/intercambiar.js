@@ -33,6 +33,7 @@ window.crearSala = () => {
   document.getElementById('codigoSalaInfo').textContent = codigoSala;
   document.querySelector('.panel-crear-unirse').style.display = 'none';
   document.querySelector('.zona-intercambio').classList.remove('hidden');
+  btnIntercambiar.classList.remove('hidden');
   cargarCartasUsuario();
 };
 
@@ -56,6 +57,7 @@ window.unirseSala = () => {
   document.getElementById('codigoSalaInfo').textContent = codigoSala;
   document.querySelector('.panel-crear-unirse').style.display = 'none';
   document.querySelector('.zona-intercambio').classList.remove('hidden');
+  btnIntercambiar.classList.remove('hidden');
   cargarCartasUsuario();
 };
 
@@ -72,7 +74,7 @@ async function cargarCartasUsuario() {
     const carta = document.createElement('div');
     carta.className = 'carta-seleccionable';
     carta.innerHTML = `<img src="${datos.sprites.other['official-artwork'].front_default}" alt="${datos.name}">`;
-    carta.addEventListener('click', (e) => alternarSeleccion(id, datos, carta));
+    carta.addEventListener('click', () => alternarSeleccion(id, datos, carta));
     cartasUsuario.appendChild(carta);
   }
 }
@@ -109,11 +111,19 @@ window.addEventListener('cartasRecibidas', (evento) => {
 
 function actualizarCartasAdversario(cartas) {
   cartaAdversario.innerHTML = '';
-  for (const carta of cartas) {
-    const div = document.createElement('div');
-    div.className = 'carta-seleccionable';
-    div.innerHTML = `<img src="${carta.imagen}" alt="${carta.nombre}" />`;
-    cartaAdversario.appendChild(div);
+
+  if (cartas.length === 0) {
+    const mensaje = document.createElement('div');
+    mensaje.className = 'mensaje-espera';
+    mensaje.textContent = 'Esperando selección...';
+    cartaAdversario.appendChild(mensaje);
+  } else {
+    for (const carta of cartas) {
+      const div = document.createElement('div');
+      div.className = 'carta-seleccionable';
+      div.innerHTML = `<img src="${carta.imagen}" alt="${carta.nombre}" />`;
+      cartaAdversario.appendChild(div);
+    }
   }
 }
 
