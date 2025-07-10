@@ -20,10 +20,21 @@ export function crearVistaCarta(pokemon) {
   header.appendChild(nombre);
   header.appendChild(hp);
 
+  // Contenedor de imagen con número Pokédex
+  const contenedorImg = document.createElement('div');
+  contenedorImg.classList.add('imagen-con-numero');
+
+  const numero = document.createElement('div');
+  numero.classList.add('numero-pokedex', 'detallado');
+  numero.textContent = `#${pokemon.id}`;
+
   const imagen = document.createElement('img');
   imagen.src = pokemon.sprites.other['official-artwork'].front_default;
   imagen.alt = pokemon.name;
   imagen.classList.add('pokemon-img');
+
+  contenedorImg.appendChild(numero);
+  contenedorImg.appendChild(imagen);
 
   const statsContainer = document.createElement('div');
   statsContainer.classList.add('stats');
@@ -52,7 +63,7 @@ export function crearVistaCarta(pokemon) {
   });
 
   contenedor.appendChild(header);
-  contenedor.appendChild(imagen);
+  contenedor.appendChild(contenedorImg); // imagen con número
   contenedor.appendChild(statsContainer);
   overlay.appendChild(contenedor);
 
@@ -69,6 +80,7 @@ export function crearVistaCarta(pokemon) {
 
   return overlay;
 }
+
 
 function traducirStat(nombre) {
   const mapa = {

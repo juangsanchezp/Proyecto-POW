@@ -79,6 +79,26 @@ body {
   padding: 0.5rem;
 }
 
+.numero-pokedex {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: rgba(255, 255, 255, 0.85);
+  color: #333;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 8px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.numero-pokedex.bloqueado {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ccc;
+}
+
+
     /* Fondos por tipo de Pokémon en cartas desbloqueadas */
   .carta.tipo-normal     { background-color: #A8A77A !important; }
   .carta.tipo-fire       { background-color: #EE8130 !important; }

@@ -33,23 +33,32 @@ function cargarCartas(coleccion) {
   for (let id = 1; id <= 150; id++) {
     const carta = document.createElement('div');
     carta.classList.add('carta');
+    carta.style.position = 'relative'; // Para posicionar el número encima
 
     const img = document.createElement('img');
 
     if (coleccion.includes(id)) {
       obtenerPokemonPorId(id).then(pokemon => {
         if (!pokemon) return;
+
+        // Número Pokédex
+        const numero = document.createElement('div');
+        numero.classList.add('numero-pokedex');
+        numero.textContent = `#${pokemon.id}`;
+        carta.appendChild(numero);
+
         img.src = pokemon.sprites.other['official-artwork'].front_default;
         img.alt = pokemon.name;
+
         carta.setAttribute("data-nombre", pokemon.name);
         carta.setAttribute("data-tipo", pokemon.types.map(t => t.type.name).join(" "));
         const tipoPrincipal = pokemon.types[0].type.name;
         carta.classList.add(`tipo-${tipoPrincipal}`);
         carta.appendChild(img);
+
         carta.addEventListener('click', () => {
           const overlay = document.getElementById('detalle-carta-personalizada');
 
-          // Si el overlay está visible, cerramos la carta y reaplicamos filtro
           if (!overlay.classList.contains('hidden')) {
             overlay.classList.add('hidden');
             overlay.innerHTML = '';
@@ -57,21 +66,28 @@ function cargarCartas(coleccion) {
             return;
           }
 
-          // Si está oculto, mostramos la nueva carta
           const nuevaCarta = crearVistaCarta(pokemon);
-          overlay.innerHTML = ''; // Limpiar por si acaso
+          overlay.innerHTML = '';
           overlay.appendChild(nuevaCarta);
           overlay.classList.remove('hidden');
         });
-
       });
     } else {
       carta.classList.add('bloqueada');
+
       obtenerPokemonPorId(id).then(pokemon => {
         if (!pokemon) return;
+
+        // Número Pokédex con estilo especial para bloqueados
+        const numero = document.createElement('div');
+        numero.classList.add('numero-pokedex', 'bloqueado');
+        numero.textContent = `#${pokemon.id}`;
+        carta.appendChild(numero);
+
         img.src = pokemon.sprites.other['official-artwork'].front_default;
         img.alt = pokemon.name;
         img.classList.add('silueta');
+
         carta.setAttribute("data-tipo", pokemon.types.map(t => t.type.name).join(" "));
         carta.appendChild(img);
       });
@@ -80,6 +96,7 @@ function cargarCartas(coleccion) {
     grid.appendChild(carta);
   }
 }
+
 
 /**
  * Mostrar mensaje temporal
