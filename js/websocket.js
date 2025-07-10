@@ -1,57 +1,41 @@
-// js/websocket.js
-import * as Ably from 'https://cdn.ably.io/lib/ably.min-1.js'; // CDN si no lo has instalado vía npm
+// websocket.js
+import { EVENTOS_ABLY } from './constantes.js';
 
-// 🔐 Reemplaza esta clave por la tuya real de Ably (desde ably.com)
-const ABLY_API_KEY = 'AQUI_TU_API_KEY_REAL'; // <-- cambia esto
-
-let ably = null;
+const API_KEY = 'MWXZ8A.Rb8fxg:JsF3dAa7mrzTJ2XPtxTDIiNt7Lvw2PHnjrdOlzBXtqY';
 let canal = null;
 
 /**
- * Conecta al canal WebSocket e inicia escucha de mensajes.
- * @param {string} nombreUsuario - "usuario1" o "usuario2"
+ * Conecta al canal de Ably usando un código de sala y alias de usuario
+ * @param {string} nombreSala - Código único de la sala (ej: 'A1B2C3')
+ * @param {string} aliasUsuario - Alias único del jugador (ej: 'Juan')
+ * @param {function} onCartasRecibidas - Función que se ejecuta al recibir cartas del otro jugador
  */
-export function conectarWebSocket(nombreUsuario) {
-  if (!ABLY_API_KEY || ABLY_API_KEY.includes('TU_API_KEY')) {
-    console.error('❌ Ably API Key no configurada.');
-    return;
-  }
+export function conectarWebSocket(nombreSala, aliasUsuario, onCartasRecibidas) {
+  const ably = new Ably.Realtime(API_KEY);
+  const nombreCanal = `sala-${nombreSala}`;
+  canal = ably.channels.get(nombreCanal);
 
-  ably = new Ably.Realtime(ABLY_API_KEY);
-  canal = ably.channels.get('intercambio-cartas');
+  canal.subscribe(EVENTOS_ABLY.CARTA_ENVIADA, (mensaje) => {
+    const datos = mensaje.data;
 
-  canal.subscribe('intercambio', (mensaje) => {
-    const { desde, carta } = mensaje.data;
-    // No mostramos nuestro propio mensaje
-    if (desde !== nombreUsuario) {
-      mostrarToast(`¡${desde} te ofreció la carta ${carta.nombre}!`);
-      const evento = new CustomEvent('cartaRecibida', { detail: carta });
-      window.dispatchEvent(evento); // notifica al resto del sistema
+    // Ignorar mensajes propios
+    if (datos.alias !== aliasUsuario) {
+      const cartas = datos.cartas || [];
+      onCartasRecibidas(cartas);
     }
   });
-
-  console.log(`✅ Conectado a WebSocket como ${nombreUsuario}`);
 }
 
 /**
- * Envía una carta seleccionada al canal WebSocket.
- * @param {string} desde - quién envía
- * @param {object} carta - objeto { id, nombre, imagen }
+ * Envía un arreglo de cartas al canal con alias incluido
+ * @param {string} alias - Alias del jugador que envía las cartas
+ * @param {Array<object>} cartas - Arreglo con cartas seleccionadas
  */
-export function enviarCartaIntercambio(desde, carta) {
+export function enviarCartas(alias, cartas) {
   if (canal) {
-    canal.publish('intercambio', { desde, carta });
+    canal.publish(EVENTOS_ABLY.CARTA_ENVIADA, { alias, cartas });
   }
 }
 
-/**
- * Muestra un mensaje flotante (toast)
- * @param {string} mensaje
- */
-function mostrarToast(mensaje) {
-  const toast = document.getElementById('toast');
-  if (!toast) return;
-  toast.textContent = mensaje;
-  toast.classList.remove('hidden');
-  setTimeout(() => toast.classList.add('hidden'), 3000);
-}
+
+

@@ -32,40 +32,46 @@ body {
   margin: 0.8rem 0 2rem;
 }
 
-/* Modal selector usuario */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-}
-
-.modal {
-  background: white;
-  color: #333;
+/* Panel crear/unirse */
+.panel-crear-unirse {
+  background-color: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 20px;
   padding: 2rem;
-  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto 2rem;
   text-align: center;
-  max-width: 320px;
 }
 
-.modal button {
+.panel-crear-unirse input,
+.panel-crear-unirse button {
   display: block;
-  margin: 1rem auto;
-  padding: 0.8rem 1.5rem;
-  background: linear-gradient(to bottom, #ffcb05, #f5a623);
-  color: #2a2a2a;
-  border: 2px solid #3b4cca;
-  font-weight: bold;
+  width: 100%;
+  margin: 0.8rem 0;
+  padding: 0.8rem;
+  border-radius: 10px;
   font-size: 1rem;
-  border-radius: 12px;
+  border: none;
+}
+
+.panel-crear-unirse input {
+  border: 1px solid #ccc;
+  outline: none;
+  font-family: sans-serif;
+  color: #333;
+}
+
+.panel-crear-unirse button {
+  background: linear-gradient(to bottom, #0099cc, #0077aa);
+  color: white;
+  font-weight: bold;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.panel-crear-unirse button:hover {
+  transform: scale(1.05);
 }
 
 /* Zona de intercambio */
@@ -75,32 +81,59 @@ body {
   align-items: flex-start;
   flex-wrap: wrap;
   padding: 0 1rem;
+  gap: 1rem;
 }
 
 /* Paneles */
-.panel {
-  background-color: rgba(255,255,255,0.1);
-  border: 2px solid #ffcb05;
+.zona-intercambio .panel {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: none;
   border-radius: 15px;
   padding: 1rem;
-  width: 300px;
-  min-height: 260px;
+  width: 360px;
+  max-height: 480px;
+  overflow-y: auto;
   text-align: center;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+}
+
+.zona-intercambio .panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.zona-intercambio .panel::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 4px;
 }
 
 .panel h2 {
-  color: #ffcb05;
+  color: #ffffff;
+  font-size: 1.3rem;
+  font-weight: 600;
   margin-bottom: 1rem;
+  text-shadow: 0 0 5px rgba(0,0,0,0.3);
 }
 
-/* Cartas del usuario */
+/* Cartas del usuario y adversario */
 .cartas-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   justify-content: center;
+  padding: 0 10px;
 }
 
+.carta-adversario {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Cartas */
 .carta-seleccionable {
   width: 80px;
   height: 110px;
@@ -123,21 +156,6 @@ body {
   transform: scale(1.1);
 }
 
-/* Carta del adversario */
-.carta-adversario {
-  width: 120px;
-  margin: 0 auto;
-}
-
-.carta-adversario img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.carta-adversario p {
-  margin-top: 0.5rem;
-}
-
 /* Flecha intercambio */
 .intercambio-icono {
   display: flex;
@@ -150,9 +168,9 @@ body {
 #btnIntercambiar {
   margin: 2rem auto;
   display: block;
-  background: linear-gradient(to bottom, #ffcb05, #f5a623);
-  color: #2a2a2a;
-  border: 2px solid #3b4cca;
+  background: linear-gradient(to bottom, #0099cc, #0077aa);
+  color: white;
+  border: none;
   font-weight: bold;
   font-size: 1.2rem;
   padding: 1rem 2rem;
@@ -249,13 +267,130 @@ body {
     align-items: center;
   }
 
-  .panel {
+  .zona-intercambio .panel {
     width: 90%;
-    margin-bottom: 1rem;
+    max-height: 400px;
   }
 
   .intercambio-icono {
     margin: 1rem 0;
   }
 }
+
+/* === MODALES FLOTANTES === */
+.hidden {
+  display: none !important;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 2px solid #ffcb05;
+  border-radius: 20px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  backdrop-filter: blur(5px);
+}
+
+.modal h2 {
+  color: #ffcb05;
+  margin-bottom: 1rem;
+}
+
+.modal input {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-family: sans-serif;
+  color: #333;
+  outline: none;
+}
+
+.modal button {
+  width: 100%;
+  padding: 0.8rem;
+  background: linear-gradient(to bottom, #ffcb05, #f5a623);
+  border: 2px solid #3b4cca;
+  color: #2a2a2a;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.modal button:hover {
+  transform: scale(1.05);
+}
+
+.modal-buttons {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.modal-buttons button {
+  margin: 0 10px;
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(to bottom, #ffcb05, #f5a623);
+  color: #2a2a2a;
+  border: 2px solid #3b4cca;
+  font-weight: bold;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* === ESTADO DE ESPERA (centrado y moderno) === */
+.espera-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.pokeball-loader {
+  width: 40px;
+  height: 40px;
+  background-image: url('../assets/img/pokeball_icon.png');
+  background-size: cover;
+  animation: spin 1s linear infinite;
+  opacity: 0.8;
+}
+
+.mensaje-espera {
+  color: #ffffff;
+  font-style: italic;
+  text-align: center;
+  opacity: 0.85;
+  font-size: 1rem;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 
