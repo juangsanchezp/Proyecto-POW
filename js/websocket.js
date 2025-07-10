@@ -1,57 +1,25 @@
-// js/websocket.js
-import * as Ably from 'https://cdn.ably.io/lib/ably.min-1.js'; // CDN si no lo has instalado vía npm
+import { EVENTOS_ABLY } from './constantes.js';
 
-// 🔐 Reemplaza esta clave por la tuya real de Ably (desde ably.com)
-const ABLY_API_KEY = 'AQUI_TU_API_KEY_REAL'; // <-- cambia esto
+const API_KEY = 'MWXZ8A.Rb8fxg:JsF3dAa7mrzTJ2XPtxTDIiNt7Lvw2PHnjrdOlzBXtqY';
+const canalNombre = 'canal-intercambio';
 
-let ably = null;
-let canal = null;
+let canal;
 
-/**
- * Conecta al canal WebSocket e inicia escucha de mensajes.
- * @param {string} nombreUsuario - "usuario1" o "usuario2"
- */
 export function conectarWebSocket(nombreUsuario) {
-  if (!ABLY_API_KEY || ABLY_API_KEY.includes('TU_API_KEY')) {
-    console.error('❌ Ably API Key no configurada.');
-    return;
-  }
+  const ably = new Ably.Realtime(API_KEY);
+  canal = ably.channels.get(canalNombre);
 
-  ably = new Ably.Realtime(ABLY_API_KEY);
-  canal = ably.channels.get('intercambio-cartas');
-
-  canal.subscribe('intercambio', (mensaje) => {
-    const { desde, carta } = mensaje.data;
-    // No mostramos nuestro propio mensaje
-    if (desde !== nombreUsuario) {
-      mostrarToast(`¡${desde} te ofreció la carta ${carta.nombre}!`);
+  // Escuchar mensajes del canal
+  canal.subscribe(EVENTOS_ABLY.CARTA_ENVIADA, (mensaje) => {
+    const carta = mensaje.data;
+    // Solo mostrar si es del otro jugador
+    if (carta.usuario !== nombreUsuario) {
       const evento = new CustomEvent('cartaRecibida', { detail: carta });
-      window.dispatchEvent(evento); // notifica al resto del sistema
+      window.dispatchEvent(evento);
     }
   });
-
-  console.log(`✅ Conectado a WebSocket como ${nombreUsuario}`);
 }
 
-/**
- * Envía una carta seleccionada al canal WebSocket.
- * @param {string} desde - quién envía
- * @param {object} carta - objeto { id, nombre, imagen }
- */
-export function enviarCartaIntercambio(desde, carta) {
-  if (canal) {
-    canal.publish('intercambio', { desde, carta });
-  }
-}
-
-/**
- * Muestra un mensaje flotante (toast)
- * @param {string} mensaje
- */
-function mostrarToast(mensaje) {
-  const toast = document.getElementById('toast');
-  if (!toast) return;
-  toast.textContent = mensaje;
-  toast.classList.remove('hidden');
-  setTimeout(() => toast.classList.add('hidden'), 3000);
+export function enviarCartaIntercambio(usuario, carta) {
+  canal.publish(EVENTOS_ABLY.CARTA_ENVIADA, { ...carta, usuario });
 }
