@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tu Colección</title>
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/carta.css">
 </head>
 <body>
   <div class="contenedor">
@@ -54,14 +56,9 @@
     <!-- Toast de notificaciones -->
     <div id="toast" class="toast hidden">Mensaje</div>
   </div>
-
-  <!-- Modal para detalles del Pokémon -->
-  <div id="modal-carta" class="modal hidden">
-    <div class="modal-content">
-      <button class="close-modal">X</button>
-      <div id="detalle-carta"></div>
-    </div>
-  </div>
+  
+  <!-- Vista individual de carta personalizada -->
+  <div id="detalle-carta-personalizada" class="overlay hidden"></div>
 
   <!-- Nueva navbar -->
   <nav class="navbar">
@@ -81,5 +78,6 @@
 
   <!-- JavaScript principal -->
   <script type="module" src="js/main.js"></script>
+
 </body>
 </html>

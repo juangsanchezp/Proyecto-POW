@@ -1,21 +1,22 @@
 // js/main.js
 import { obtenerPokemonPorId } from './api.js';
-import { mostrarModalPokemon } from './modal.js';
+// import { mostrarModalPokemon } from './modal.js';
 import {
   obtenerColeccion,
   guardarColeccion
 } from './storage.js';
+import { crearVistaCarta } from './carta.js';
 
 const grid = document.querySelector('.grid-cartas');
 const inputBusqueda = document.getElementById("search-input");
 const botonesTipo = document.querySelectorAll(".tipo-btn");
 
+
 document.addEventListener('DOMContentLoaded', () => {
   let coleccion = obtenerColeccion();
 
-  // Si está vacío, agregar 3 iniciales
   if (coleccion.length === 0) {
-    const iniciales = [6, 3, 9]; // Charizard, Venusaur, Blastoise
+    const iniciales = [6, 3, 9];
     guardarColeccion(iniciales);
     coleccion = iniciales;
   }
@@ -42,7 +43,14 @@ function cargarCartas(coleccion) {
         carta.classList.add(`tipo-${tipoPrincipal}`);
 
         carta.appendChild(img);
-        carta.addEventListener('click', () => mostrarModalPokemon(pokemon));
+        carta.addEventListener('click', () => {
+          const overlay = document.getElementById('detalle-carta-personalizada');
+          overlay.innerHTML = ''; // Limpiar si había otra carta
+          const nuevaCarta = crearVistaCarta(pokemon);
+          overlay.appendChild(nuevaCarta);
+          overlay.classList.remove('hidden');
+        });
+
       });
     } else {
       carta.classList.add('bloqueada');
@@ -62,7 +70,6 @@ function cargarCartas(coleccion) {
   }
 }
 
-// Botones inferiores
 window.navegar = function (seccion) {
   if (seccion === 'abrir') {
     window.location.href = 'abrir.html';
@@ -78,7 +85,6 @@ function mostrarToast(mensaje) {
   setTimeout(() => toast.classList.add('hidden'), 2500);
 }
 
-// Filtro por nombre
 if (inputBusqueda) {
   inputBusqueda.addEventListener("input", () => {
     const termino = inputBusqueda.value.toLowerCase();
@@ -97,7 +103,6 @@ if (inputBusqueda) {
   });
 }
 
-// Filtro por tipo
 botonesTipo.forEach(btn => {
   btn.addEventListener("click", () => {
     const tipoSeleccionado = btn.dataset.tipo;

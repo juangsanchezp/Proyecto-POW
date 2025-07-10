@@ -113,7 +113,8 @@ body {
 }
 
 .bloqueada img {
-  opacity: 0.2;
+  filter: grayscale(100%) brightness(0) contrast(200%);
+  opacity: 1;
 }
 
 
@@ -335,6 +336,23 @@ body {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
 
+/* Overlay para mostrar carta personalizada */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+
 /* Colores personalizados por tipo */
 .tipo-normal { background-color: #A8A77A; }
 .tipo-fire { background-color: #EE8130; }
@@ -356,5 +374,16 @@ body {
 .tipo-fairy { background-color: #D685AD; }
 .tipo-all { background-color: #555; }
 
-
+.carta-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
 
