@@ -457,3 +457,35 @@ body {
 .carta-individual.tipo-dark       { background-color: #705746; }
 .carta-individual.tipo-steel      { background-color: #B7B7CE; color: #000; }
 .carta-individual.tipo-fairy      { background-color: #D685AD; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .zona-intercambio {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .zona-intercambio .panel {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .intercambio-icono {
+    font-size: 2rem;
+    margin: 1rem 0;
+  }
+
+  .cartas-grid,
+  .carta-adversario {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .carta {
+    transform: scale(0.9);
+  }
+}
+

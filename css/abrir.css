@@ -1,4 +1,3 @@
-
 /* === RESET Y BASE === */
 * {
   margin: 0;
@@ -89,7 +88,6 @@ body {
   }
 }
 
-
 .boton-sobre {
   position: relative;
   z-index: 6;
@@ -127,15 +125,15 @@ body {
 /* Cartas animadas en arco */
 .cartas-animadas {
   position: absolute;
-  top: -120px;
+  top: -100px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  gap: 0;
   pointer-events: none;
   z-index: 4;
+  gap: 0;
 }
 
 .cartas-animadas .carta {
@@ -152,32 +150,6 @@ body {
   opacity: 0;
   transition: transform 0.5s ease, opacity 0.5s ease;
 }
-
-.cartas-animadas .imagen-con-numero {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.cartas-animadas .imagen-con-numero img {
-  width: 100%;
-  height: auto;
-}
-
-.cartas-animadas .numero-pokedex {
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #333;
-  font-weight: bold;
-  font-size: 0.7rem;
-  padding: 2px 6px;
-  border-radius: 12px;
-  z-index: 2;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
-
 
 .cartas-animadas.animate .carta {
   opacity: 1;
@@ -189,198 +161,34 @@ body {
   object-fit: contain;
 }
 
-/* === BOTÓN ABRIR SOBRE === */
-.boton-sobre {
-  margin-top: 2rem;
-  padding: 0.75rem 2rem;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: white;
-  border: 3px solid gold;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  cursor: pointer;
-  z-index: 6;
-}
-
-.boton-sobre:hover {
-  transform: scale(1.05);
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 15px gold;
-}
-
-.boton-sobre:disabled {
-  opacity: 0.7;
-  cursor: default;
-  background: rgba(255, 255, 255, 0.05);
-  color: #ccc;
-  border-color: #d4af37;
-  box-shadow: none;
-}
-
-/* === CARTA INDIVIDUAL MAXIMIZADA === */
-.carta-individual {
-/* Carta emergente generada */
-.carta-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-
-  /* Fondo transparente y efecto flotante */
-  background: rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(3px);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 20;
-}
-
-.carta-individual img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-.carta-individual.mostrar {
-  animation: aparecerCarta 0.4s ease forwards;
-}
-
-.carta-individual.visible {
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-  pointer-events: all;
-}
-
-@keyframes aparecerCarta {
-  from {
-    transform: translate(-50%, -60%) scale(0.5);
-    opacity: 0;
+/* Responsive: mantener efecto arco más pequeño */
+@media (max-width: 500px) {
+  .cartas-animadas {
+    top: -80px;
+    gap: 0;
   }
-  to {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
+
+  .cartas-animadas .carta {
+    width: 72px;
+    height: 100px;
   }
-}
 
-.cartas-animadas .carta {
-  position: relative;
-  width: 100px;
-  height: 140px;
-  border-radius: 12px;
-  border: 4px solid #ffcb05;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: rotate(var(--rot)) translateY(var(--desplazamientoY));
-  opacity: 0;
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
+  .titulo {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
 
+  .boton-sobre {
+    font-size: 1rem;
+    padding: 0.6rem 1.5rem;
+  }
 
-.cartas-animadas .numero-pokedex {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  left: auto;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #333;
-  font-weight: bold;
-  font-size: 0.7rem;
-  padding: 2px 6px;
-  border-radius: 12px;
-  z-index: 2;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-}
+  .navbar span {
+    font-size: 0.65rem;
+  }
 
-
-
-
-/* === TIPO DE FONDO DE CARTAS === */
-.carta-individual.tipo-normal     { background-color: #A8A77A; }
-.carta-individual.tipo-fire       { background-color: #EE8130; }
-.carta-individual.tipo-water      { background-color: #6390F0; }
-.carta-individual.tipo-electric   { background-color: #F7D02C; color: #000; }
-.carta-individual.tipo-grass      { background-color: #7AC74C; }
-.carta-individual.tipo-ice        { background-color: #96D9D6; color: #000; }
-.carta-individual.tipo-fighting   { background-color: #C22E28; }
-.carta-individual.tipo-poison     { background-color: #A33EA1; }
-.carta-individual.tipo-ground     { background-color: #E2BF65; color: #000; }
-.carta-individual.tipo-flying     { background-color: #A98FF3; }
-.carta-individual.tipo-psychic    { background-color: #F95587; }
-.carta-individual.tipo-bug        { background-color: #A6B91A; color: #000; }
-.carta-individual.tipo-rock       { background-color: #B6A136; color: #000; }
-.carta-individual.tipo-ghost      { background-color: #735797; }
-.carta-individual.tipo-dragon     { background-color: #6F35FC; }
-.carta-individual.tipo-dark       { background-color: #705746; }
-.carta-individual.tipo-steel      { background-color: #B7B7CE; color: #000; }
-.carta-individual.tipo-fairy      { background-color: #D685AD; }
-
-/* === NAVBAR INFERIOR === */
-/* ========== NUEVA NAVBAR ========== */
-.navbar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 70px;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(20px);
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 1000;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: white;
-  font-size: 0.75rem;
-  padding: 8px 12px;
-  border-radius: 16px;
-  transition: all 0.3s ease;
-}
-
-.nav-item img {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 4px;
-  filter: brightness(1.4);
-}
-
-.nav-item:hover {
-  color: #fff;
-  transform: scale(1.1);
-}
-
-.nav-item.active {
-  background: rgba(255, 255, 255, 0.25); /* Fondo blanco translúcido */
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 10px 16px;
-  color: white;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-.nav-item.active img {
-  filter: drop-shadow(0 0 6px rgba(255, 255, 0, 0.8));
-
-.hidden {
-  display: none !important;
-}
-}
+  .navbar img {
+    width: 20px;
+    height: 20px;
+  }
 }

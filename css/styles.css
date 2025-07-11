@@ -40,6 +40,7 @@ body {
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 10px rgba(255, 221, 0, 0.8), 0 0 30px rgba(255, 255, 255, 0.3);
   letter-spacing: 2px;
+  margin-bottom: 1.5rem;
 }
 
 /* Contenedor general */
@@ -100,8 +101,8 @@ body {
 
 .cantidad-copias {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  bottom: 4px;
+  left: 4px;
   background-color: rgba(0, 0, 0, 0.75);
   color: white;
   padding: 2px 6px;
@@ -229,29 +230,121 @@ body {
 }
 
 /* ========== RESPONSIVE ========== */
-@media (max-width: 767px) {
-  .grid-cartas {
-    grid-template-columns: repeat(3, 1fr);
+@media (max-width: 768px) {
+  .logo {
+    width: 160px;
+    margin-top: 1.5rem;
   }
 
   .titulo {
     font-size: 2rem;
+    margin: 1rem 0;
   }
 
-  .bottom-nav button {
-    font-size: 0.9rem;
-    padding: 0.6rem 1rem;
+  .contenedor {
+    padding: 0 0.5rem;
+  }
+
+  .search-container {
+    width: 90%;
+    margin-bottom: 1rem;
+  }
+
+  .search-bar {
+    padding: 0.7rem 1rem 0.7rem 2.5rem;
+    font-size: 0.95rem;
+  }
+
+  .search-icon {
+    width: 16px;
+    height: 16px;
+    left: 0.8rem;
+  }
+
+  .filtros-tipo {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin: 0 auto 1.5rem;
+    max-width: 100%;
+    scrollbar-width: none;
+  }
+
+  .filtros-tipo::-webkit-scrollbar {
+    display: none;
+  }
+
+
+  .tipo-btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 0.8rem;
+    padding: 0.4rem 0.9rem;
+    color: white !important;
+  }
+
+
+  .grid-cartas {
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 0.6rem;
+    padding: 0 1rem;
+    width: 100%;
   }
 
   .carta {
-    width: 80px;
-    height: 110px;
+    width: 85px;
+    height: 115px;
+    padding: 0.3rem;
   }
 
   .carta img {
     width: 70%;
   }
+
+  .numero-pokedex {
+    font-size: 0.7rem;
+    padding: 2px 4px;
+  }
+
+  .cantidad-copias {
+    font-size: 0.65rem;
+    padding: 2px 4px;
+  }
+
+  .barra-progreso-externa {
+    height: 12px;
+  }
+
+  .progreso-texto {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.8rem;
+  }
+
+  .navbar {
+    height: 64px;
+    padding: 0 0.5rem;
+  }
+
+  .nav-item {
+    font-size: 0.7rem;
+    padding: 6px 10px;
+  }
+
+  .nav-item img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .btn-abrir-sobre {
+    font-size: 0.9rem;
+    padding: 0.6rem 1rem;
+    bottom: 80px;
+    right: 16px;
+  }
 }
+
 
 /* ========== NUEVA NAVBAR ========== */
 .navbar {
@@ -351,15 +444,15 @@ body {
 
 /* Estilo base de los botones */
 .tipo-btn {
-  color: white;
-  border: none;
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white !important;
 }
 
 .tipo-btn:hover {
@@ -370,13 +463,19 @@ body {
 
 .filtros-tipo {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   gap: 0.5rem;
-  margin: 1rem auto;
-  max-width: 600px;
-  margin: 0.5rem auto 1.5rem;
+  padding: 0.5rem 1rem;
+  margin: 0 auto 1.5rem;
+  max-width: 100%;
+  scrollbar-width: none; /* Firefox */
 }
+
+.filtros-tipo::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
 
 .tipo-btn:active {
   transform: scale(0.95);
@@ -624,4 +723,17 @@ body::before {
   display: flex;
   align-items: center;
   height: 100%;
+}
+
+.progreso-container {
+  margin-bottom: 2rem !important; /* más separación debajo de la barra de progreso */
+}
+
+.search-container {
+  margin-top: 0.5rem;  /* separación arriba del buscador */
+  margin-bottom: 1.2rem; /* ya lo habías aplicado para separar del filtro */
+}
+
+.filtros-tipo {
+  margin-top: 0.8rem; /* separación superior adicional si hace falta */
 }
