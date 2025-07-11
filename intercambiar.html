@@ -72,6 +72,16 @@
   </nav>
 
   <!-- Scripts -->
+   <script>
+  const currentPage = window.location.pathname.split('/').pop();
+  document.querySelectorAll('.nav-item').forEach(item => {
+    if (item.getAttribute('href') === currentPage) {
+      item.classList.add('active');
+    } else {
+      item.classList.remove('active');
+    }
+  });
+  </script>
   <script type="module" src="js/intercambiar.js"></script>
 </body>
 </html>
