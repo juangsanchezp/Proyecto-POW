@@ -110,7 +110,8 @@ function alternarSeleccion(id, datos, elementoCarta) {
     const nuevaCarta = {
       id,
       nombre: datos.name,
-      imagen: datos.sprites.other['official-artwork'].front_default
+      imagen: datos.sprites.other['official-artwork'].front_default,
+      tipo: datos.types[0].type.name 
     };
     cartasSeleccionadas.push(nuevaCarta);
     elementoCarta.classList.add('carta-seleccionada');
@@ -142,7 +143,7 @@ function actualizarCartasAdversario(cartas) {
 
       const numero = String(carta.id).padStart(3, '0');
       const cartaHTML = `
-        <div class="card-container tipo-normal">
+        <div class="card-container tipo-${carta.tipo}">
           <div class="numero-pokedex">#${numero}</div>
           <div class="card-header">
             <img class="pokemon-img" src="${carta.imagen}" alt="${carta.nombre}" />
@@ -154,6 +155,7 @@ function actualizarCartasAdversario(cartas) {
     }
   }
 }
+
 
 function verificarIntercambioListo() {
   const listo = cartasSeleccionadas.length >= 1 && cartasSeleccionadas.length <= 5 &&
