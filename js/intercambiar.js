@@ -1,4 +1,3 @@
-// js/intercambiar.js
 import { obtenerColeccion, guardarColeccion } from './storage.js';
 import { obtenerPokemonPorId } from './api.js';
 import { conectarWebSocket, enviarCartas } from './websocket.js';
@@ -73,7 +72,17 @@ async function cargarCartasUsuario() {
 
     const carta = document.createElement('div');
     carta.className = 'carta-seleccionable';
-    carta.innerHTML = `<img src="${datos.sprites.other['official-artwork'].front_default}" alt="${datos.name}">`;
+    const tipo = datos.types[0].type.name;
+    const numero = String(datos.id).padStart(3, '0');
+    const cartaHTML = `
+      <div class="card-container tipo-${tipo}">
+        <div class="numero-pokedex">#${numero}</div>
+        <div class="card-header">
+          <img class="pokemon-img" src="${datos.sprites.other['official-artwork'].front_default}" alt="${datos.name}" />
+        </div>
+      </div>
+    `;
+    carta.innerHTML = cartaHTML;
     carta.addEventListener('click', () => alternarSeleccion(id, datos, carta));
     cartasUsuario.appendChild(carta);
   }
@@ -121,7 +130,17 @@ function actualizarCartasAdversario(cartas) {
     for (const carta of cartas) {
       const div = document.createElement('div');
       div.className = 'carta-seleccionable';
-      div.innerHTML = `<img src="${carta.imagen}" alt="${carta.nombre}" />`;
+
+      const numero = String(carta.id).padStart(3, '0');
+      const cartaHTML = `
+        <div class="card-container tipo-normal">
+          <div class="numero-pokedex">#${numero}</div>
+          <div class="card-header">
+            <img class="pokemon-img" src="${carta.imagen}" alt="${carta.nombre}" />
+          </div>
+        </div>
+      `;
+      div.innerHTML = cartaHTML;
       cartaAdversario.appendChild(div);
     }
   }
@@ -154,7 +173,3 @@ function mostrarToast(mensaje) {
   toast.classList.remove('hidden');
   setTimeout(() => toast.classList.add('hidden'), 3000);
 }
-
-
-
-

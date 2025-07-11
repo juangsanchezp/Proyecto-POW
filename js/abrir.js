@@ -8,7 +8,20 @@ const cartasAnimadas = document.getElementById('cartas-animadas');
 const cartaEmergente = document.getElementById('carta-emergente');
 const destelloCSS = document.getElementById('destello-css');
 
-btnAbrir.addEventListener('click', async () => {
+let nuevasCartas = [];
+let btnOtro = null;
+
+async function abrirSobre() {
+  // RESET visual
+  cartasAnimadas.classList.remove('animate');
+  cartasAnimadas.innerHTML = '';
+  cartaEmergente.innerHTML = '';
+  cartaEmergente.classList.add('hidden');
+  if (btnOtro) {
+    btnOtro.remove();
+    btnOtro = null;
+  }
+
   // Animación inicial
   sobreImg.classList.add('bajando');
   destelloCSS.classList.remove('destello-css');
@@ -20,7 +33,7 @@ btnAbrir.addEventListener('click', async () => {
 
   // Selección aleatoria
   let coleccion = obtenerColeccion();
-  const nuevasCartas = [];
+  nuevasCartas = [];
   while (nuevasCartas.length < 5) {
     const id = Math.floor(Math.random() * 150) + 1;
     if (!nuevasCartas.includes(id)) {
@@ -35,7 +48,6 @@ btnAbrir.addEventListener('click', async () => {
   const mostrarCarta = async () => {
     const id = nuevasCartas[indice];
     const pokemon = await obtenerPokemonPorId(id);
-
     const carta = crearVistaCarta(pokemon);
     cartaEmergente.innerHTML = '';
     cartaEmergente.appendChild(carta);
@@ -49,7 +61,7 @@ btnAbrir.addEventListener('click', async () => {
     } else {
       cartaEmergente.classList.add('hidden');
 
-      // Mostrar todas en arco
+            // Mostrar todas en arco con diseño de colección
       const angulos = [-25, -12, 0, 12, 25];
       const desplazamientosY = [30, 15, 0, 15, 30];
 
@@ -62,30 +74,55 @@ btnAbrir.addEventListener('click', async () => {
         carta.style.setProperty('--rot', `${angulos[i]}deg`);
         carta.style.setProperty('--desplazamientoY', `${desplazamientosY[i]}px`);
 
+        // Número de la Pokédex
+        const numero = document.createElement('div');
+        numero.classList.add('numero-pokedex');
+        numero.textContent = `#${id}`;
+        carta.appendChild(numero);
+
+        // Imagen del Pokémon
         const img = document.createElement('img');
         img.src = pokemon.sprites.other['official-artwork'].front_default;
         img.alt = pokemon.name;
         carta.appendChild(img);
+
         cartasAnimadas.appendChild(carta);
       }
+
 
       setTimeout(() => {
         cartasAnimadas.classList.add('animate');
       }, 100);
 
-      btnAbrir.disabled = true;
-      btnAbrir.textContent = "¡Sobre abierto!";
+      mostrarBotonOtro();
     }
   };
 
-  cartaEmergente.addEventListener('pointerdown', avanzar);
+  cartaEmergente.onclick = avanzar;
   await mostrarCarta();
+}
+
+function mostrarBotonOtro() {
+  btnOtro = document.createElement('button');
+  btnOtro.textContent = "Abrir otro sobre";
+  btnOtro.className = "boton-sobre tipo-btn tipo-electric borde-dorado";
+  btnOtro.style.marginTop = "1rem";
+  btnOtro.onclick = () => {
+    abrirSobre();
+  };
+
+  const contenedor = document.getElementById('sobre-contenedor');
+  contenedor.appendChild(btnOtro);
+}
+
+btnAbrir.addEventListener('click', () => {
+  btnAbrir.remove(); // Quita el botón inicial
+  abrirSobre();
 });
 
-// === Activar automáticamente el botón de navegación correspondiente ===
-const currentPage = window.location.pathname.split('/').pop(); // abrir.html
+// === Activar el botón de navbar dinámicamente ===
+const currentPage = window.location.pathname.split('/').pop();
 const navItems = document.querySelectorAll('.nav-item');
-
 navItems.forEach(item => {
   const href = item.getAttribute('href');
   if (href === currentPage) {

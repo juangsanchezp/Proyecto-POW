@@ -382,6 +382,51 @@ body {
   animation: pulse 1.8s infinite;
 }
 
+.numero-pokedex {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 2px 8px;
+  border-radius: 8px;
+  color: #222;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.card-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 10px #ffcb05; 
+  transition: transform 0.2s ease;
+}
+
+
+.card-header {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pokemon-img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  margin-top: 12px; /* nuevo: baja un poco la imagen */
+}
+
+
 @keyframes pulse {
   0% { opacity: 0.5; }
   50% { opacity: 1; }
@@ -393,4 +438,22 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-
+/* === TIPO DE FONDO DE CARTAS === */
+.carta-individual.tipo-normal     { background-color: #A8A77A; }
+.carta-individual.tipo-fire       { background-color: #EE8130; }
+.carta-individual.tipo-water      { background-color: #6390F0; }
+.carta-individual.tipo-electric   { background-color: #F7D02C; color: #000; }
+.carta-individual.tipo-grass      { background-color: #7AC74C; }
+.carta-individual.tipo-ice        { background-color: #96D9D6; color: #000; }
+.carta-individual.tipo-fighting   { background-color: #C22E28; }
+.carta-individual.tipo-poison     { background-color: #A33EA1; }
+.carta-individual.tipo-ground     { background-color: #E2BF65; color: #000; }
+.carta-individual.tipo-flying     { background-color: #A98FF3; }
+.carta-individual.tipo-psychic    { background-color: #F95587; }
+.carta-individual.tipo-bug        { background-color: #A6B91A; color: #000; }
+.carta-individual.tipo-rock       { background-color: #B6A136; color: #000; }
+.carta-individual.tipo-ghost      { background-color: #735797; }
+.carta-individual.tipo-dragon     { background-color: #6F35FC; }
+.carta-individual.tipo-dark       { background-color: #705746; }
+.carta-individual.tipo-steel      { background-color: #B7B7CE; color: #000; }
+.carta-individual.tipo-fairy      { background-color: #D685AD; }
