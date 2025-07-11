@@ -65,28 +65,37 @@ function generarCodigoSala() {
 }
 
 async function cargarCartasUsuario() {
-  const ids = obtenerColeccion();
-  for (const id of ids) {
+  const coleccion = obtenerColeccion(); // ahora es un objeto: { "25": 3, "4": 1 }
+
+  for (const idStr in coleccion) {
+    const id = parseInt(idStr);
+    const cantidad = coleccion[idStr];
+
     const datos = await obtenerPokemonPorId(id);
     if (!datos) continue;
 
     const carta = document.createElement('div');
     carta.className = 'carta-seleccionable';
+
     const tipo = datos.types[0].type.name;
     const numero = String(datos.id).padStart(3, '0');
+
     const cartaHTML = `
       <div class="card-container tipo-${tipo}">
         <div class="numero-pokedex">#${numero}</div>
+        <div class="cantidad-copias">x${cantidad}</div>
         <div class="card-header">
           <img class="pokemon-img" src="${datos.sprites.other['official-artwork'].front_default}" alt="${datos.name}" />
         </div>
       </div>
     `;
+
     carta.innerHTML = cartaHTML;
     carta.addEventListener('click', () => alternarSeleccion(id, datos, carta));
     cartasUsuario.appendChild(carta);
   }
 }
+
 
 function alternarSeleccion(id, datos, elementoCarta) {
   const index = cartasSeleccionadas.findIndex(c => c.id === id);
@@ -154,11 +163,26 @@ function verificarIntercambioListo() {
 
 btnIntercambiar.addEventListener('click', () => {
   const coleccion = obtenerColeccion();
-  const nuevaColeccion = coleccion.filter(id => !cartasSeleccionadas.some(c => c.id === id));
+  const nuevaColeccion = { ...coleccion };
 
+  // Restar cantidad de las cartas seleccionadas
+  for (const carta of cartasSeleccionadas) {
+    const id = String(carta.id);
+    if (nuevaColeccion[id]) {
+      nuevaColeccion[id]--;
+      if (nuevaColeccion[id] <= 0) {
+        delete nuevaColeccion[id]; // Eliminar si ya no queda copia
+      }
+    }
+  }
+
+  // Sumar las cartas recibidas
   for (const carta of cartasRecibidas) {
-    if (!nuevaColeccion.includes(carta.id)) {
-      nuevaColeccion.push(carta.id);
+    const id = String(carta.id);
+    if (nuevaColeccion[id]) {
+      nuevaColeccion[id]++;
+    } else {
+      nuevaColeccion[id] = 1;
     }
   }
 

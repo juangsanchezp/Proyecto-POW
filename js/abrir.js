@@ -1,4 +1,4 @@
-import { obtenerPokemonPorId } from './api.js';
+import { obtenerPokemonPorId } from './api.js'; 
 import { obtenerColeccion, guardarColeccion } from './storage.js';
 import { crearVistaCarta } from './carta.js';
 
@@ -32,7 +32,7 @@ async function abrirSobre() {
   sobreImg.src = 'assets/img/SobreAbiertoPokemon (4).png';
 
   // Selección aleatoria
-  let coleccion = obtenerColeccion();
+  let coleccion = obtenerColeccion(); // ahora es un objeto { "3": 1, "6": 2 }
   nuevasCartas = [];
   while (nuevasCartas.length < 5) {
     const id = Math.floor(Math.random() * 150) + 1;
@@ -41,7 +41,17 @@ async function abrirSobre() {
     }
   }
 
-  guardarColeccion([...new Set([...coleccion, ...nuevasCartas])]);
+  // Actualizar cantidades en la colección
+  nuevasCartas.forEach(id => {
+    const clave = String(id);
+    if (coleccion[clave]) {
+      coleccion[clave]++;
+    } else {
+      coleccion[clave] = 1;
+    }
+  });
+
+  guardarColeccion(coleccion);
 
   let indice = 0;
 
@@ -61,7 +71,7 @@ async function abrirSobre() {
     } else {
       cartaEmergente.classList.add('hidden');
 
-            // Mostrar todas en arco con diseño de colección
+      // Mostrar todas en arco
       const angulos = [-25, -12, 0, 12, 25];
       const desplazamientosY = [30, 15, 0, 15, 30];
 
@@ -74,21 +84,28 @@ async function abrirSobre() {
         carta.style.setProperty('--rot', `${angulos[i]}deg`);
         carta.style.setProperty('--desplazamientoY', `${desplazamientosY[i]}px`);
 
-        // Número de la Pokédex
+        // Numero Pokedex
         const numero = document.createElement('div');
         numero.classList.add('numero-pokedex');
         numero.textContent = `#${id}`;
         carta.appendChild(numero);
 
-        // Imagen del Pokémon
+        // Imagen del Pokemon
         const img = document.createElement('img');
         img.src = pokemon.sprites.other['official-artwork'].front_default;
         img.alt = pokemon.name;
         carta.appendChild(img);
 
+        //Mostrar cantidad de copias que ya tienes
+        const coleccion = obtenerColeccion();
+        const cantidad = coleccion[String(id)] || 0;
+        const copias = document.createElement('div');
+        copias.classList.add('cantidad-copias');
+        copias.textContent = `x${cantidad}`;
+        carta.appendChild(copias);
+
         cartasAnimadas.appendChild(carta);
       }
-
 
       setTimeout(() => {
         cartasAnimadas.classList.add('animate');
@@ -116,11 +133,11 @@ function mostrarBotonOtro() {
 }
 
 btnAbrir.addEventListener('click', () => {
-  btnAbrir.remove(); // Quita el botón inicial
+  btnAbrir.remove();
   abrirSobre();
 });
 
-// === Activar el botón de navbar dinámicamente ===
+// === Activar navbar dinámicamente ===
 const currentPage = window.location.pathname.split('/').pop();
 const navItems = document.querySelectorAll('.nav-item');
 navItems.forEach(item => {

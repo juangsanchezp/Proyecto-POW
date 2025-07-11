@@ -2,12 +2,12 @@
 const CLAVE_COLECCION = 'coleccion';
 
 export function obtenerColeccion() {
-  const datos = localStorage.getItem(CLAVE_COLECCION);
-  return datos ? JSON.parse(datos) : [];
+  const data = localStorage.getItem('coleccion');
+  return data ? JSON.parse(data) : {};
 }
 
-export function guardarColeccion(nuevaColeccion) {
-  localStorage.setItem(CLAVE_COLECCION, JSON.stringify(nuevaColeccion));
+export function guardarColeccion(coleccionObj) {
+  localStorage.setItem('coleccion', JSON.stringify(coleccionObj));
 }
 
 export function desbloquearPokemon(id) {

@@ -15,10 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let coleccion = obtenerColeccion();
 
   // Si está vacía, iniciar con 3 Pokémon iniciales
-  if (coleccion.length === 0) {
-    const iniciales = [6, 3, 9]; // Charizard, Venusaur, Blastoise
-    guardarColeccion(iniciales);
-    coleccion = iniciales;
+  if (Object.keys(coleccion).length === 0) {
+    coleccion = { "6": 1, "3": 1, "9": 1 };
+    guardarColeccion(coleccion);
   }
 
   cargarCartas(coleccion);
@@ -37,7 +36,7 @@ function cargarCartas(coleccion) {
 
     const img = document.createElement('img');
 
-    if (coleccion.includes(id)) {
+    if (coleccion.hasOwnProperty(id)) {
       obtenerPokemonPorId(id).then(pokemon => {
         if (!pokemon) return;
 
@@ -46,6 +45,12 @@ function cargarCartas(coleccion) {
         numero.classList.add('numero-pokedex');
         numero.textContent = `#${pokemon.id}`;
         carta.appendChild(numero);
+
+        // Cantidad de copias (arriba derecha)
+        const copias = document.createElement('div');
+        copias.classList.add('cantidad-copias');
+        copias.textContent = `x${coleccion[id]}`;
+        carta.appendChild(copias);
 
         img.src = pokemon.sprites.other['official-artwork'].front_default;
         img.alt = pokemon.name;
@@ -180,7 +185,7 @@ botonesTipo.forEach(btn => {
  */
 function actualizarProgreso(coleccion) {
   const total = 150;
-  const cantidad = coleccion.length;
+  const cantidad = Object.keys(coleccion).length;
   const porcentaje = Math.floor((cantidad / total) * 100);
 
   const progresoTexto = document.getElementById('progreso-texto');
