@@ -131,6 +131,7 @@ body {
   min-height: 200px;
   padding: 1rem;
   flex-wrap: wrap;
+  gap: 1rem;
 }
 
 /* Cartas */
