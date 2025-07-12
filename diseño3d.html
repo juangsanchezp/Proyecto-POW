@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vista 3D Pokémon</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <link rel="stylesheet" href="./css/diseño3d.css">
+</head>
+<body>
+  <h1 id="nombre">Pokémon 3D</h1>
+  <model-viewer id="visor" src="" alt="Pokémon 3D" auto-rotate camera-controls></model-viewer>
+
+  <!-- Solo este botón permanecerá -->
+  <button class="volver-btn" onclick="volverACarta()">Regresar a la carta</button>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const nombre = params.get('nombre');
+    const id = parseInt(params.get('id'));
+
+    document.getElementById('nombre').textContent = nombre || 'Pokémon 3D';
+
+    fetch('https://pokemon-3d-api.onrender.com/v1/pokemon')
+      .then(res => res.json())
+      .then(data => {
+        const pokemon = data.find(p => p.id === id);
+        if (pokemon && pokemon.forms && pokemon.forms[0]) {
+          document.getElementById('visor').src = pokemon.forms[0].model;
+        }
+      });
+
+    function volverACarta() {
+      window.location.href = `carta.html?id=${id}&from=coleccion`;
+    }
+  </script>
+</body>
+</html>
+

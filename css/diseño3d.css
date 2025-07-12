@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  font-family: 'Pokemon Solid', sans-serif;
+  background-image: url('../assets/img/fondo_estadio.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: white;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  color: #ffcb05;
+  text-shadow: 2px 2px #3b4cca;
+}
+
+model-viewer {
+  width: 90%;
+  max-width: 500px;
+  height: 500px;
+}
+
+/* Botón único con estilo amarillo como en carta */
+.volver-btn {
+  margin-top: 2rem;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  background-color: #ffcb05;
+  color: #3b4cca;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #3b4cca;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.volver-btn:hover {
+  background-color: #f5c400;
+}

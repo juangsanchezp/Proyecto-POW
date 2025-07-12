@@ -6,50 +6,56 @@
   <title>Carta Pokémon</title>
   <link rel="stylesheet" href="../css/carta.css" />
 </head>
-<body>
-  <div class="carta-container">
-    <img id="pokemon-img" class="pokemon-img" src="" alt="Pokémon" />
+<body style="margin: 0">
 
-    <div class="stats">
-      <div class="stat">
-        <span>Salud</span>
-        <div class="bar-container">
-          <div class="bar" id="hp-bar"></div>
-        </div>
-      </div>
-      <div class="stat">
-        <span>Ataque</span>
-        <div class="bar-container">
-          <div class="bar" id="atk-bar"></div>
-        </div>
-      </div>
-      <div class="stat">
-        <span>Defensa</span>
-        <div class="bar-container">
-          <div class="bar" id="def-bar"></div>
-        </div>
-      </div>
-      <div class="stat">
-        <span>Ataque Esp.</span>
-        <div class="bar-container">
-          <div class="bar" id="sp-atk-bar"></div>
-        </div>
-      </div>
-      <div class="stat">
-        <span>Defensa Esp.</span>
-        <div class="bar-container">
-          <div class="bar" id="sp-def-bar"></div>
-        </div>
-      </div>
-      <div class="stat">
-        <span>Velocidad</span>
-        <div class="bar-container">
-          <div class="bar" id="speed-bar"></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div id="contenedor-carta"></div>
 
-  <script type="module" src="../js/carta.js"></script>
+  <script type="module">
+    import { obtenerPokemonPorId } from '../js/api.js';
+    import { crearVistaCarta } from '../js/carta.js';
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const from = params.get("from");
+
+    if (id) {
+      obtenerPokemonPorId(id).then(pokemon => {
+        const carta = crearVistaCarta(pokemon);
+        document.getElementById("contenedor-carta").appendChild(carta);
+
+        // Si viene desde colección, agregar botones dentro de la carta
+        if (from === "coleccion") {
+          const boton3D = document.createElement("button");
+          boton3D.textContent = "Ver en 3D";
+          boton3D.classList.add("boton-3d");
+          boton3D.onclick = () => {
+            window.location.href = `diseño3d.html?id=${pokemon.id}&nombre=${encodeURIComponent(pokemon.name)}`;
+          };
+
+          const botonRegresar = document.createElement("button");
+          botonRegresar.textContent = "Regresar a colección";
+          botonRegresar.classList.add("boton-3d", "regresar-btn");
+          botonRegresar.onclick = () => {
+            window.location.href = "index.html";
+          };
+
+          const contenedor = carta.querySelector('.card-container');
+          if (contenedor) {
+            const contenedorBotones = document.createElement('div');
+            contenedorBotones.style.marginTop = '1.5rem';
+            contenedorBotones.style.textAlign = 'center';
+            contenedorBotones.appendChild(boton3D);
+            contenedorBotones.appendChild(document.createElement("br"));
+            contenedorBotones.appendChild(botonRegresar);
+            contenedor.appendChild(contenedorBotones);
+          }
+        }
+      });
+    }
+  </script>
 </body>
 </html>
+
+
+
+

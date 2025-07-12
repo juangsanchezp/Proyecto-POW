@@ -61,20 +61,11 @@ function cargarCartas(coleccion) {
         carta.classList.add(`tipo-${tipoPrincipal}`);
         carta.appendChild(img);
 
+        // 👉 Aquí va la redirección modificada
         carta.addEventListener('click', () => {
-          const overlay = document.getElementById('detalle-carta-personalizada');
-
-          if (!overlay.classList.contains('hidden')) {
-            overlay.classList.add('hidden');
-            overlay.innerHTML = '';
-            volverAplicarFiltro();
-            return;
-          }
-
-          const nuevaCarta = crearVistaCarta(pokemon);
-          overlay.innerHTML = '';
-          overlay.appendChild(nuevaCarta);
-          overlay.classList.remove('hidden');
+          const id = pokemon.id;
+          const nombre = pokemon.name;
+          window.location.href = `carta.html?id=${id}&from=coleccion`;
         });
       });
     } else {
@@ -101,7 +92,6 @@ function cargarCartas(coleccion) {
     grid.appendChild(carta);
   }
 }
-
 
 /**
  * Mostrar mensaje temporal
@@ -214,5 +204,6 @@ function marcarNavActiva() {
     }
   });
 }
+
 
 

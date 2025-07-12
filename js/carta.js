@@ -1,4 +1,4 @@
-// js/card.js
+// js/carta.js
 
 export function crearVistaCarta(pokemon) {
   const overlay = document.createElement('div');
@@ -20,7 +20,7 @@ export function crearVistaCarta(pokemon) {
   header.appendChild(nombre);
   header.appendChild(hp);
 
-  // Contenedor de imagen con número Pokédex
+  // Imagen con número
   const contenedorImg = document.createElement('div');
   contenedorImg.classList.add('imagen-con-numero');
 
@@ -36,6 +36,7 @@ export function crearVistaCarta(pokemon) {
   contenedorImg.appendChild(numero);
   contenedorImg.appendChild(imagen);
 
+  // Stats
   const statsContainer = document.createElement('div');
   statsContainer.classList.add('stats');
 
@@ -63,24 +64,19 @@ export function crearVistaCarta(pokemon) {
   });
 
   contenedor.appendChild(header);
-  contenedor.appendChild(contenedorImg); // imagen con número
+  contenedor.appendChild(contenedorImg);
   contenedor.appendChild(statsContainer);
   overlay.appendChild(contenedor);
 
-  // Solo ejecutar esta parte si estamos en index.html (colección)
-  if (window.location.pathname.includes('index.html')) {
-    overlay.addEventListener('click', (e) => {
-      if (e.target === contenedor || overlay) {
-        document.body.innerHTML = '';
-        window.location.reload();
-      }
-    });
-  }
-
+  // Cerrar al hacer clic fuera de la carta
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.remove();
+    }
+  });
 
   return overlay;
 }
-
 
 function traducirStat(nombre) {
   const mapa = {
@@ -97,3 +93,6 @@ function traducirStat(nombre) {
 function capitalizar(texto) {
   return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
+
+
+
